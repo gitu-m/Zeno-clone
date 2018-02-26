@@ -12,5 +12,7 @@ HEADERS += MyRect.h \
 SOURCES += main.cpp MyRect.cpp \
     Board.cpp
 
+CONFIG += c++11
+
 QT += core gui
 QT += widgets
