@@ -1,4 +1,5 @@
 #include "Board.h"
+#include "MyRect.h"
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
 #include <iostream>
@@ -8,7 +9,8 @@ Board::Board(QGraphicsScene * scene){
     l = 5; // Set board size
     b = 5;
     // int **board;
-
+    int initX = (11-l)*20;
+    int initY = (11-b)*20;
     //Set tile positions
     int level[][5] =  {{1,0,0,0,0},
                         {1,1,0,0,1},
@@ -33,12 +35,22 @@ Board::Board(QGraphicsScene * scene){
         for (int j = 0; j < b; ++j) {
             if (board[j][i] == 1) { // Render the tile
                 QGraphicsRectItem * rect = new QGraphicsRectItem();
-                rect->setRect(i*40,j*40,40,40);
+                rect->setRect(initX + i*40,initY + j*40,40,40);
                 scene->addItem(rect); // Add tile to scene
             }
         }
     }
 
+    player = new MyRect();
+
+    // std::cout <<" Hi ";
+    player->posX = 0;
+    player->posY = 0;
+    player->setRect(player->posX*40 + initX + 12,player->posY*40 + initY + 12,16,16);
+    player->setFlag(QGraphicsItem::ItemIsFocusable);
+    player->setFocus();
+
+    scene->addItem(player);
 }
 
 
