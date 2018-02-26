@@ -10,7 +10,7 @@ Board::Board(QGraphicsScene * scene){
     // int **board;
 
     //Set tile positions
-    int level[][b] =  {{1,0,0,0,0},
+    int level[][5] =  {{1,0,0,0,0},
                         {1,1,0,0,1},
                         {0,1,0,0,1},
                         {0,1,1,1,1},
