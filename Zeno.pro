@@ -7,8 +7,10 @@ TARGET = Zeno
 INCLUDEPATH += .
 
 # Input
-HEADERS += MyRect.h
-SOURCES += main.cpp MyRect.cpp
+HEADERS += MyRect.h \
+    Board.h
+SOURCES += main.cpp MyRect.cpp \
+    Board.cpp
 
 QT += core gui
 QT += widgets

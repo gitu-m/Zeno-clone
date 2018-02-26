@@ -3,26 +3,9 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsView>
 #include "MyRect.h"
+#include "Board.h"
 
-int l = 5, b = 5;
-// int **board;
-int board[][5] =  {{1,0,0,0,0},
-                    {1,1,0,0,1},
-                    {0,1,0,0,1},
-                    {0,1,1,1,1},
-                    {1,1,0,0,1}};
-
-void genBoard(QGraphicsScene * scene) {
-    for (int i = 0; i < l; ++i) {
-        for (int j = 0; j < b; ++j) {
-            if (board[j][i] == 1) {
-                QGraphicsRectItem * rect = new QGraphicsRectItem();
-                rect->setRect(i*40,j*40,40,40);
-                scene->addItem(rect);
-            }
-        }
-    }
-}
+Board * brd;
 
 int main(int argc, char *argv[]){
 
@@ -31,11 +14,13 @@ int main(int argc, char *argv[]){
     // create a scene
     QGraphicsScene * scene= new QGraphicsScene();
 
-    genBoard(scene);
-    
+    //Creates the Level
+    brd = new Board(scene);
 
+    //Create Player
     MyRect * player = new MyRect();
 
+    //Set Player Position
     player->posX = 0;
     player->posY = 0;
     player->setRect(player->posX*40 + 12,player->posY*40 + 12,16,16);
