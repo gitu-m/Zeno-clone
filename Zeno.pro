@@ -8,10 +8,8 @@ INCLUDEPATH += .
 
 # Input
 HEADERS += Board.h button.h Game.h Player.h Event.h Tesseract.h Tile.h \
-    Clone.h
 
 SOURCES += Board.cpp button.cpp Game.cpp main.cpp Player.cpp Tesseract.cpp Tile.cpp \
-    Clone.cpp
 
 CONFIG += c++11
 
