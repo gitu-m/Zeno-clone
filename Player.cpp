@@ -19,7 +19,7 @@ void Player::keyPressEvent(QKeyEvent *event){
 
     event_queue.push_back(key_pressed); // Push this event to queue
 
-//    std::cout << "Key pressed at time " << key_pressed.key_time.count() << "\n";
+   // std::cout << posX << " " << posY << "\n";
 
     if (event->key() == Qt::Key_Left){ // Move left
 //        std::cout<<"left"<<std::endl;

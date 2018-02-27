@@ -18,12 +18,13 @@ Game::Game(){
 }
 
 void Game::Start(){
-	// std::cout << "hi";
 	scene->clear();
-	// scene = new QGraphicsScene();
 
-	brd = new Board(scene);
-	// std::cout <<" Hi ";
+    // Setup Board for the current level
+    brd = new Board(scene);
+
+    // Increase Level for Next Call
+    Level++;
     
 }
 
