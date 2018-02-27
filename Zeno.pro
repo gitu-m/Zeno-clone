@@ -7,10 +7,9 @@ TARGET = Zeno
 INCLUDEPATH += .
 
 # Input
-HEADERS += Board.h button.h Game.h \
-    Player.h
-SOURCES += Board.cpp button.cpp Game.cpp main.cpp \
-    Player.cpp
+HEADERS += Board.h button.h Game.h Player.h Event.h Tesseract.h
+
+SOURCES += Board.cpp button.cpp Game.cpp main.cpp Player.cpp Tesseract.cpp
 
 CONFIG += c++11
 

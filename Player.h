@@ -4,13 +4,7 @@
 #include <QGraphicsRectItem>
 #include <chrono>
 #include <ctime>
-
-typedef struct node {
-
-    QKeyEvent * key; // The key event that occured
-    std::chrono::steady_clock::duration key_time; // Time (since player was created) at which key was pressed
-
-} key_event;
+#include "Event.h"
 
 class Player: public QGraphicsRectItem{
 public:
