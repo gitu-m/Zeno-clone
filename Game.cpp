@@ -1,8 +1,9 @@
 #include "Game.h"
-#include "MyRect.h"
+#include "Player.h"
 #include "Board.h"
 #include "button.h"
 #include <iostream>
+
 Game::Game(){
 	// create the scene
     scene = new QGraphicsScene();
@@ -27,7 +28,8 @@ void Game::Start(){
 }
 
 void Game::DisplayMenu(){
-	QGraphicsTextItem* titleText = new QGraphicsTextItem(QString("Zeno"));
+
+    QGraphicsTextItem* titleText = new QGraphicsTextItem(QString("Zeno"));
     QFont titleFont("Times",50);
     titleText->setFont(titleFont);
     int txPos = this->width()/2 - titleText->boundingRect().width()/2;
@@ -50,5 +52,6 @@ void Game::DisplayMenu(){
     quitButton->setPos(qxPos,qyPos);
     connect(quitButton,SIGNAL(clicked()),this,SLOT(close()));
     scene->addItem(quitButton);
+
 }
 

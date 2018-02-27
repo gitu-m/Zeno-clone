@@ -5,17 +5,19 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsView>
 #include <QWidget>
-#include "MyRect.h"
+#include "Player.h"
 #include "Board.h"
 
 class Game : public QGraphicsView{
 	Q_OBJECT
 public:
-	Game();
+
+    Game();
 	QGraphicsScene * scene;	
 	Board * brd;
 	int Level;
 	void DisplayMenu();
+
 public slots:
 	void Start();
 };

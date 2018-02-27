@@ -19,6 +19,7 @@
 # Fortran module files
 *.mod
 *.smod
+moc_*
 
 # Compiled Static libraries
 *.lai
@@ -35,3 +36,5 @@ Zeno
 # MakeFile
 Makefile
 *.pro.user
+
+

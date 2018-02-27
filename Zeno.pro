@@ -7,8 +7,12 @@ TARGET = Zeno
 INCLUDEPATH += .
 
 # Input
-HEADERS += Board.h button.h Game.h MyRect.h
-SOURCES += Board.cpp button.cpp Game.cpp main.cpp MyRect.cpp
+HEADERS += Board.h button.h Game.h \
+    Player.h
+SOURCES += Board.cpp button.cpp Game.cpp main.cpp \
+    Player.cpp
+
+CONFIG += c++11
 
 QT += core gui
 QT += widgets

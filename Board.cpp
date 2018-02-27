@@ -1,8 +1,9 @@
 #include "Board.h"
-#include "MyRect.h"
+#include "Player.h"
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
 #include <iostream>
+#include <chrono>
 
 Board::Board(QGraphicsScene * scene){
 
@@ -41,11 +42,13 @@ Board::Board(QGraphicsScene * scene){
         }
     }
 
-    player = new MyRect();
+    player = new Player();
 
     // std::cout <<" Hi ";
     player->posX = 0;
     player->posY = 0;
+    player->time_spawned = std::chrono::steady_clock::now();
+
     player->setRect(player->posX*40 + initX + 12,player->posY*40 + initY + 12,16,16);
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     player->setFocus();

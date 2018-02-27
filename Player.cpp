@@ -1,16 +1,26 @@
-#include "MyRect.h"
+#include "Player.h"
 #include <QKeyEvent>
 #include <iostream>
 #include "Board.h"
 #include "Game.h"
+#include <chrono>
+//#include <ctime>
 
 extern Game * game;
 
-// Board *brd = game->brd;
+void Player::keyPressEvent(QKeyEvent *event){
 
-// int **board = &boardpointer;
-void MyRect::keyPressEvent(QKeyEvent *event){
-//    std::cout << posX <<" " << posY << " ";
+    key_event key_pressed;
+
+    key_pressed.key = event;
+
+    std::chrono::steady_clock::time_point time_event = std::chrono::steady_clock::now();
+    key_pressed.key_time = time_event - time_spawned;
+
+    event_queue.push_back(key_pressed); // Push this event to queue
+
+//    std::cout << "Key pressed at time " << key_pressed.key_time.count() << "\n";
+
     if (event->key() == Qt::Key_Left){ // Move left
 //        std::cout<<"left"<<std::endl;
 
