@@ -1,10 +1,13 @@
 #include "Player.h"
 #include <QKeyEvent>
 #include <iostream>
+#include "Tesseract.h"
+#include "Tile.h"
 #include "Board.h"
 #include "Game.h"
 #include <chrono>
-//#include <ctime>
+#include <QList>
+#include <typeinfo>
 
 extern Game * game;
 
@@ -18,8 +21,6 @@ void Player::keyPressEvent(QKeyEvent *event){
     key_pressed.key_time = time_event - time_spawned;
 
     event_queue.push_back(key_pressed); // Push this event to queue
-
-   // std::cout << posX << " " << posY << "\n";
 
     if (event->key() == Qt::Key_Left){ // Move left
 //        std::cout<<"left"<<std::endl;
@@ -54,4 +55,30 @@ void Player::keyPressEvent(QKeyEvent *event){
     }
 
     setPos(posX*40, posY*40);
+
+
+    //Check is player is colliding with anything
+
+     QList<QGraphicsItem *> colliding_items = collidingItems();
+
+     for (int i = 0, n = colliding_items.size(); i < n ; i++){
+
+         if (typeid(*colliding_items[i]) == typeid(Tesseract)){
+             //Remove tesseract
+             //TODO add tesseract functionality
+
+             scene()->removeItem(colliding_items[i]);
+             delete colliding_items[i];
+         }
+
+         else if (typeid(*colliding_items[i]) == typeid(Tile)){
+
+             if (qgraphicsitem_cast<Tile *> (colliding_items[i]) -> state == 999){
+                //Level over
+                emit level_over();
+
+             }
+
+         }
+     }
 }

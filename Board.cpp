@@ -6,9 +6,11 @@
 #include <iostream>
 #include <chrono>
 #include "Tile.h"
+#include "Tesseract.h"
 /*
 *   0   - No Tile
 *   1   - Regular Tile
+*   2   - Tesseract
 *   255 - Start Tile
 *   999 - End Tile
 */
@@ -25,7 +27,7 @@ Board::Board(QGraphicsScene * scene){
     //Set tile positions
     int level[][5] =  { {1  ,0  ,0  ,0  ,0  },
                         {255,1  ,0  ,0  ,999},
-                        {0  ,1  ,0  ,0  ,1  },
+                        {0  ,2  ,0  ,0  ,1  },
                         {0  ,1  ,1  ,1  ,1  },
                         {1  ,1  ,0  ,0  ,1  }};
 
@@ -50,14 +52,19 @@ Board::Board(QGraphicsScene * scene){
                 tile->setRect(initposX + i*40,initposY + j*40,40,40);
                 scene->addItem(tile); // Add tile to scene
 
-                if (board[j][i] == 999)
-                {
+                if (board[j][i] == 999){
+
                     /* code */
                 }
-                if (board[j][i] == 255)
-                {
+                else if (board[j][i] == 255){
                     srtX = i;
                     srtY = j;
+                }
+                else if (board[j][i] == 2){
+
+                    Tesseract * tess = new Tesseract();
+                    tess->setPos(initposX + i*40 + 12 ,initposY + 12 + j*40);
+                    scene->addItem(tess);
                 }
                 
                 board[j][i] = 1;
@@ -78,6 +85,6 @@ Board::Board(QGraphicsScene * scene){
     player->posY = srtY;
     player->setPos(player->posX*40, player->posY*40);
     scene->addItem(player);
-    
+
 }
 

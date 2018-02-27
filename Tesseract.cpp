@@ -1,7 +1,5 @@
 #include "Tesseract.h"
 #include <QBrush>
-#include <QDebug>
-
 
 Tesseract::Tesseract(){
 
@@ -10,8 +8,6 @@ Tesseract::Tesseract(){
     QBrush brush;
     brush.setColor(QColor(00,00,00));
     brush.setStyle(Qt::SolidPattern);
-
-    qDebug() << "Tess created";
 
     this->setBrush(brush);
 

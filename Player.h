@@ -6,7 +6,9 @@
 #include <ctime>
 #include "Event.h"
 
-class Player: public QGraphicsRectItem{
+class Player: public QObject, public QGraphicsRectItem{
+
+    Q_OBJECT
 public:
 
     void keyPressEvent(QKeyEvent * event);
@@ -14,6 +16,10 @@ public:
     std::chrono::steady_clock::time_point time_spawned;
 
     std::vector <key_event> event_queue; // To store all the events the player goes through
+
+signals:
+    void level_over();
+
 };
 
 #endif // MYRECT_H

@@ -2,7 +2,6 @@
 #include "Player.h"
 #include "Board.h"
 #include "button.h"
-#include <iostream>
 
 Game::Game(){
 	// create the scene
@@ -25,6 +24,10 @@ void Game::Start(){
 
     // Increase Level for Next Call
     Level++;
+
+    //If level is over, start next level
+    connect(brd->player, SIGNAL(level_over()),this,SLOT(Start()));
+
     
 }
 
