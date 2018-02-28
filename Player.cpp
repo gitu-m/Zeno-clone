@@ -9,7 +9,7 @@
 #include <QList>
 #include <typeinfo>
 #include "Clone.h"
-
+#include <QtConcurrent>
 #include <QDebug>
 
 extern Game * game;
@@ -18,12 +18,14 @@ void Player::keyPressEvent(QKeyEvent *event){
 
     Event key_pressed;
 
+    int flag = 0;
+
     key_pressed.key = new QKeyEvent(QEvent::KeyPress, event->key(),Qt::NoModifier);
 
     std::chrono::steady_clock::time_point time_event = std::chrono::steady_clock::now();
     key_pressed.key_time = time_event - time_spawned;
 
-    event_queue.push_back(key_pressed); // Push this event to queue
+    
 
 
     if (event->key() == Qt::Key_Left){ // Move left
@@ -31,6 +33,7 @@ void Player::keyPressEvent(QKeyEvent *event){
 
         if (posX-1 >= 0 && game->brd->board[posY][posX-1] == 1){
             posX--;
+            flag = 1;
         }
     }
 
@@ -41,6 +44,7 @@ void Player::keyPressEvent(QKeyEvent *event){
 
         if (posX+1 < game->brd->l && game->brd->board[posY][posX+1] == 1){
             posX++;
+            flag = 1;
         }
     }
 
@@ -49,6 +53,7 @@ void Player::keyPressEvent(QKeyEvent *event){
 
         if (posY-1 >= 0 && game->brd->board[posY-1][posX] == 1){
             posY--;
+            flag = 1;
 
         }
 
@@ -59,9 +64,16 @@ void Player::keyPressEvent(QKeyEvent *event){
 
         if (posY+1 < game->brd->b && game->brd->board[posY+1][posX] == 1){
             posY++;
+            flag = 1;
         }
     }
 
+    if (flag)
+    {
+        event_queue.push_back(key_pressed); // Push this event to queue
+    }
+
+    // delete &key_pressed;
     setPos(posX*40, posY*40);
 
 

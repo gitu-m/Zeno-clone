@@ -10,6 +10,7 @@
 #include "Clone.h"
 
 #include <QDebug>
+#include <QtConcurrent>
 
 /*
 *   0   - No Tile
@@ -24,7 +25,7 @@ void Board::make_clone(QGraphicsScene * scene, const std::vector<Event> player_e
     qDebug() << "Clone created";
 
     Clone * past_self = new Clone(player_events, scene);
-
+    // QtConcurrent::run(past_self->start_moving(player_events,scene));
 }
 
 Board::Board(QGraphicsScene * scene){

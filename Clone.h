@@ -17,17 +17,21 @@ public:
     int posX, posY;
 
     uint i = 0;
-
+    std::vector<Event> player_events;
+    QGraphicsScene * scene;
     Clone(const std::vector<Event> player_events, QGraphicsScene * scene);
 
-    void start_moving(const std::vector<Event> player_events, QGraphicsScene * scene);
+    void start_moving();
 
 signals:
     void time_move(Event);
+	void makeMov();
+
+// private :
+    // void move(Event this_move);
 
 private slots:
-    void move(Event this_move);
-
+	void changePos();
 };
 
 #endif // CLONE_H

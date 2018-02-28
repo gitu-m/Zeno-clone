@@ -15,5 +15,4 @@ SOURCES += Board.cpp button.cpp Game.cpp main.cpp Player.cpp Tesseract.cpp Tile.
 
 CONFIG += c++11
 
-QT += core gui
-QT += widgets
+QT += core gui widgets concurrent

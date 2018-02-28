@@ -7,7 +7,7 @@
 #include "Game.h"
 #include <chrono>
 #include <QList>
-
+#include <QtConcurrent>
 #include <QDebug>
 
 extern Game * game;
@@ -16,36 +16,37 @@ Clone::Clone(const std::vector<Event> player_events, QGraphicsScene *scene){
 
     setRect(120 + 12, 120 + 12,16,16);
 
+    // scene->addItem(this);
     scene->addItem(this);
-
     posX = 0;
     posY = 1;
 
     setPos(posX*40, posY*40);
+    this->player_events = player_events;
+    this->scene = scene;
+//     uint i = 0;
+//     time_spawned = std::chrono::steady_clock::now();
 
-    uint i = 0;
-    time_spawned = std::chrono::steady_clock::now();
+//     while( i < player_events.size()){
 
-    while( i < player_events.size()){
+//         if (std::chrono::steady_clock::now() - time_spawned >= player_events[i].key_time){
 
-        if (std::chrono::steady_clock::now() - time_spawned >= player_events[i].key_time){
+// //            qDebug() << "Move";
 
-//            qDebug() << "Move";
+//             move(player_events[i]);
 
-            move(player_events[i]);
+//             i++;
 
-            i++;
+//         }
+//     }
 
-        }
-    }
-
-    connect(this, SIGNAL(time_move(Event)), this, SLOT(move(Event)));
-
+    QFuture<void> future = QtConcurrent::run(this,&Clone::start_moving);
+    // connect(this, SIGNAL(time_move(Event)), this, SLOT(move(Event)));
+    connect(this,SIGNAL(makeMov()), this, SLOT(changePos()));
 };
 
-void Clone::start_moving(const std::vector<Event> player_events, QGraphicsScene *scene){
-
-    scene->addItem(this);
+void Clone::start_moving(){
+    qDebug() <<"Called";
     uint i = 0;
     time_spawned = std::chrono::steady_clock::now();
 
@@ -55,52 +56,47 @@ void Clone::start_moving(const std::vector<Event> player_events, QGraphicsScene 
 
 //            qDebug() << "Move";
 
-            emit time_move(player_events[i]);
+            // emit time_move(player_events[i]);
+            if (player_events[i].key->key() == Qt::Key_Left){ // Move left
+
+                qDebug() << "left";
+
+                posX--;
+            }
+
+            else if (player_events[i].key->key() == Qt::Key_Right){ // Move right
+
+                qDebug() << "right";
+
+                posX++;
+
+            }
+
+            else if (player_events[i].key->key() == Qt::Key_Up){ //Move up
+
+                qDebug() << "up";
+
+                posY--;
+            }
+
+            else if (player_events[i].key->key() == Qt::Key_Down){ // Move down
+
+                qDebug() << "down";
+
+               posY++;
+            }
+
+            // setPos(posX*40, posY*40);
+            // changePos();
+            emit makeMov();
 
             i++;
 
         }
     }
-
-//    delete this;
-
+    delete this;
 }
 
-
-void Clone::move(Event this_move){
-
-
-    if (this_move.key->key() == Qt::Key_Left){ // Move left
-
-        qDebug() << "left";
-
-        posX--;
-    }
-
-    else if (this_move.key->key() == Qt::Key_Right){ // Move right
-
-        qDebug() << "right";
-
-        posX++;
-
-    }
-
-    else if (this_move.key->key() == Qt::Key_Up){ //Move up
-
-        qDebug() << "up";
-
-        posY--;
-    }
-
-    else if (this_move.key->key() == Qt::Key_Down){ // Move down
-
-        qDebug() << "down";
-
-       posY++;
-    }
-
+void Clone::changePos(){
     setPos(posX*40, posY*40);
-
-//    delete this; // Delete after all events are done
-
 }
