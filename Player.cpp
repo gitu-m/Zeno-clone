@@ -1,26 +1,30 @@
-#include "Player.h"
+﻿#include "Player.h"
 #include <QKeyEvent>
-#include <iostream>
 #include "Tesseract.h"
 #include "Tile.h"
 #include "Board.h"
 #include "Game.h"
+#include "Event.h"
 #include <chrono>
 #include <QList>
 #include <typeinfo>
+#include "Clone.h"
+
+#include <QDebug>
 
 extern Game * game;
 
 void Player::keyPressEvent(QKeyEvent *event){
 
-    key_event key_pressed;
+    Event key_pressed;
 
-    key_pressed.key = event;
+    key_pressed.key = new QKeyEvent(QEvent::KeyPress, event->key(),Qt::NoModifier);
 
     std::chrono::steady_clock::time_point time_event = std::chrono::steady_clock::now();
     key_pressed.key_time = time_event - time_spawned;
 
     event_queue.push_back(key_pressed); // Push this event to queue
+
 
     if (event->key() == Qt::Key_Left){ // Move left
 //        std::cout<<"left"<<std::endl;
@@ -33,6 +37,8 @@ void Player::keyPressEvent(QKeyEvent *event){
     else if (event->key() == Qt::Key_Right){ // Move right
 //        std::cout<<"right"<<std::endl;
 
+//        qDebug() << " player " << key_pressed.key_time.count();
+
         if (posX+1 < game->brd->l && game->brd->board[posY][posX+1] == 1){
             posX++;
         }
@@ -43,7 +49,9 @@ void Player::keyPressEvent(QKeyEvent *event){
 
         if (posY-1 >= 0 && game->brd->board[posY-1][posX] == 1){
             posY--;
+
         }
+
     }
 
     else if (event->key() == Qt::Key_Down){ // Movw down
@@ -68,7 +76,18 @@ void Player::keyPressEvent(QKeyEvent *event){
              //TODO add tesseract functionality
 
              scene()->removeItem(colliding_items[i]);
+
              delete colliding_items[i];
+
+//             Clone * past_self = new Clone(event_queue, scene());
+
+//             qDebug() << "Clone created";
+
+//             scene->addItem(past_self);
+//             past_self->start_moving();
+
+             emit clone(scene(), event_queue);
+
          }
 
          else if (typeid(*colliding_items[i]) == typeid(Tile)){

@@ -4,7 +4,7 @@
 #include <QKeyEvent>
 #include <chrono>
 
-class key_event {
+class Event {
 
 public:
 

@@ -3,7 +3,7 @@
 
 #include <QGraphicsRectItem>
 #include <chrono>
-#include <ctime>
+#include <queue>
 #include "Event.h"
 
 class Player: public QObject, public QGraphicsRectItem{
@@ -15,11 +15,11 @@ public:
     int posX, posY;
     std::chrono::steady_clock::time_point time_spawned;
 
-    std::vector <key_event> event_queue; // To store all the events the player goes through
+    std::vector <Event> event_queue; // To store all the events the player goes through
 
 signals:
     void level_over();
-
+    void clone(QGraphicsScene *, std::vector <Event>);
 };
 
 #endif // MYRECT_H

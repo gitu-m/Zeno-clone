@@ -7,6 +7,10 @@
 #include <chrono>
 #include "Tile.h"
 #include "Tesseract.h"
+#include "Clone.h"
+
+#include <QDebug>
+
 /*
 *   0   - No Tile
 *   1   - Regular Tile
@@ -14,6 +18,14 @@
 *   255 - Start Tile
 *   999 - End Tile
 */
+
+void Board::make_clone(QGraphicsScene * scene, const std::vector<Event> player_events){
+
+    qDebug() << "Clone created";
+
+    Clone * past_self = new Clone(player_events, scene);
+
+}
 
 Board::Board(QGraphicsScene * scene){
     int srtX,srtY;
@@ -27,7 +39,7 @@ Board::Board(QGraphicsScene * scene){
     //Set tile positions
     int level[][5] =  { {1  ,0  ,0  ,0  ,0  },
                         {255,1  ,0  ,0  ,999},
-                        {0  ,2  ,0  ,0  ,1  },
+                        {0  ,1  ,0  ,0  ,2  },
                         {0  ,1  ,1  ,1  ,1  },
                         {1  ,1  ,0  ,0  ,1  }};
 
@@ -57,9 +69,11 @@ Board::Board(QGraphicsScene * scene){
                     /* code */
                 }
                 else if (board[j][i] == 255){
+
                     srtX = i;
                     srtY = j;
                 }
+
                 else if (board[j][i] == 2){
 
                     Tesseract * tess = new Tesseract();
@@ -73,18 +87,19 @@ Board::Board(QGraphicsScene * scene){
     }
 
     player = new Player();
-    // std::cout <<" Hi ";
-    player->posX = 0;
-    player->posY = 0;
+
     player->time_spawned = std::chrono::steady_clock::now();
 
-    player->setRect(player->posX*40 + initposX + 12,player->posY*40 + initposY + 12,16,16);
-    player->setFlag(QGraphicsItem::ItemIsFocusable);
-    player->setFocus();
+    player->setRect(initposX + 12, initposY + 12,16,16);
     player->posX = srtX;
     player->posY = srtY;
     player->setPos(player->posX*40, player->posY*40);
+
+    player->setFlag(QGraphicsItem::ItemIsFocusable);
+    player->setFocus();
     scene->addItem(player);
+
+    connect(player, SIGNAL(clone(QGraphicsScene *, std::vector <Event>)), this, SLOT(make_clone(QGraphicsScene *, const std::vector <Event>)));
 
 }
 
