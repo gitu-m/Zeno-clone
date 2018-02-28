@@ -15,8 +15,6 @@ extern Game * game;
 Clone::Clone(const std::vector<Event> player_events, QGraphicsScene *scene){
 
     setRect(120 + 12, 120 + 12,16,16);
-
-    // scene->addItem(this);
     scene->addItem(this);
     posX = 0;
     posY = 1;
@@ -24,24 +22,8 @@ Clone::Clone(const std::vector<Event> player_events, QGraphicsScene *scene){
     setPos(posX*40, posY*40);
     this->player_events = player_events;
     this->scene = scene;
-//     uint i = 0;
-//     time_spawned = std::chrono::steady_clock::now();
-
-//     while( i < player_events.size()){
-
-//         if (std::chrono::steady_clock::now() - time_spawned >= player_events[i].key_time){
-
-// //            qDebug() << "Move";
-
-//             move(player_events[i]);
-
-//             i++;
-
-//         }
-//     }
-
+    run = 1;
     QFuture<void> future = QtConcurrent::run(this,&Clone::start_moving);
-    // connect(this, SIGNAL(time_move(Event)), this, SLOT(move(Event)));
     connect(this,SIGNAL(makeMov()), this, SLOT(changePos()));
 };
 
@@ -50,7 +32,7 @@ void Clone::start_moving(){
     uint i = 0;
     time_spawned = std::chrono::steady_clock::now();
 
-    while( i < player_events.size()){
+    while( i < player_events.size() && run){
 
         if (std::chrono::steady_clock::now() - time_spawned >= player_events[i].key_time){
 

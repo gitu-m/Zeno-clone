@@ -17,6 +17,7 @@ public:
     int posX, posY;
 
     uint i = 0;
+    int run;
     std::vector<Event> player_events;
     QGraphicsScene * scene;
     Clone(const std::vector<Event> player_events, QGraphicsScene * scene);

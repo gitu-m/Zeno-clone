@@ -90,14 +90,6 @@ void Player::keyPressEvent(QKeyEvent *event){
              scene()->removeItem(colliding_items[i]);
 
              delete colliding_items[i];
-
-//             Clone * past_self = new Clone(event_queue, scene());
-
-//             qDebug() << "Clone created";
-
-//             scene->addItem(past_self);
-//             past_self->start_moving();
-
              emit clone(scene(), event_queue);
 
          }
@@ -106,6 +98,10 @@ void Player::keyPressEvent(QKeyEvent *event){
 
              if (qgraphicsitem_cast<Tile *> (colliding_items[i]) -> state == 999){
                 //Level over
+                if (game->brd->past_self != NULL)
+                {
+                    game->brd->past_self->run = 0;
+                }
                 emit level_over();
 
              }
