@@ -70,6 +70,8 @@ void Clone::start_moving(){
 
             // setPos(posX*40, posY*40);
             // changePos();
+            if (!run)
+                break;
             emit makeMov();
 
             i++;
