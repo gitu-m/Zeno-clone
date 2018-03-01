@@ -25,7 +25,7 @@ void Player::keyPressEvent(QKeyEvent *event){
     std::chrono::steady_clock::time_point time_event = std::chrono::steady_clock::now();
     key_pressed.key_time = time_event - time_spawned;
 
-    
+
 
 
     if (event->key() == Qt::Key_Left){ // Move left

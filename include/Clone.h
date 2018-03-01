@@ -12,27 +12,27 @@ class Clone: public QObject, public QGraphicsRectItem{
 
 public:
 
+    uint i = 0;
+    int posX, posY;
+    int run;
+
+    std::vector<Event> player_events;
     std::chrono::steady_clock::time_point time_spawned;
 
-    int posX, posY;
-
-    uint i = 0;
-    int run;
-    std::vector<Event> player_events;
     QGraphicsScene * scene;
+
     Clone(const std::vector<Event> player_events, QGraphicsScene * scene);
+
+
+signals:
+
+    void time_move(Event);
+    void makeMov(int , int );
+
+public slots:
 
     void start_moving();
 
-signals:
-    void time_move(Event);
-	void makeMov();
-
-// private :
-    // void move(Event this_move);
-
-private slots:
-	void changePos();
 };
 
 #endif // CLONE_H

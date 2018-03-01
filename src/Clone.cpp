@@ -25,12 +25,6 @@ Clone::Clone(const std::vector<Event> player_events, QGraphicsScene *scene){
     
     run = 1;
 
-    QFuture<void> future = QtConcurrent::run(this,&Clone::start_moving);
-    
-    connect(this,SIGNAL(makeMov()), this, SLOT(changePos()));
-
-    // future.waitForFinished();
-
 };
 
 void Clone::start_moving(){
@@ -47,47 +41,54 @@ void Clone::start_moving(){
             // emit time_move(player_events[i]);
             if (player_events[i].key->key() == Qt::Key_Left){ // Move left
 
-                qDebug() << "left";
+                if (posX-1 >= 0 && game->brd->board[posY][posX-1] == 1){
 
-                posX--;
+                    posX--;
+
+                }
+
+                qDebug() << "left";
             }
 
             else if (player_events[i].key->key() == Qt::Key_Right){ // Move right
 
+                if (posX+1 >= 0 && game->brd->board[posY][posX+1] == 1){
+
+                    posX++;
+
+                }
+
                 qDebug() << "right";
-
-                posX++;
-
             }
 
             else if (player_events[i].key->key() == Qt::Key_Up){ //Move up
 
-                qDebug() << "up";
+                if (posY-1 >= 0 && game->brd->board[posY-1][posX] == 1){
 
-                posY--;
+                    posY--;
+
+                }
+
+                qDebug() << "up";
             }
 
             else if (player_events[i].key->key() == Qt::Key_Down){ // Move down
 
-                qDebug() << "down";
+                if (posY+1 >= 0 && game->brd->board[posY+1][posX] == 1){
 
-               posY++;
+                    posY++;
+
+                }
+
+                qDebug() << "down";
             }
 
-            // setPos(posX*40, posY*40);
-            // changePos();
-            if (!run)
-                break;
-            emit makeMov();
+            emit makeMov(posX*40, posY*40);
 
             i++;
 
         }
     }
-    delete this;
+//    delete this;
 }
 
-void Clone::changePos(){
-    if (run)
-        setPos(posX*40, posY*40);
-}

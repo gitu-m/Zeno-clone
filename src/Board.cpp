@@ -24,9 +24,27 @@ void Board::make_clone(QGraphicsScene * scene, const std::vector<Event> player_e
 
     qDebug() << "Clone created";
 
+    //Create Clone
     past_self = new Clone(player_events, scene);
-    // QtConcurrent::run(past_self->start_moving(player_events,scene));
-    // connect(player,SIGNAL(level_over()),this,SLOT(remove_clone()));
+
+    //Connection to make clone start running
+    connect(this,SIGNAL(startClone()),past_self, SLOT(start_moving()));
+
+    //Connection to set clone position
+    connect(past_self, &Clone::makeMov , this, &Board::changeClonePos);
+
+    past_self->moveToThread(&cloneThread);
+
+    emit startClone();
+
+    cloneThread.start();
+
+}
+
+void Board::changeClonePos(int X, int Y){ // Slot
+
+    past_self->setPos(X, Y);
+
 }
 
 Board::Board(QGraphicsScene * scene){

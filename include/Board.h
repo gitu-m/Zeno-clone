@@ -3,20 +3,29 @@
 #include "Player.h"
 #include "Clone.h"
 #include <QGraphicsScene>
+#include <QtCore>
 
-class Board: public QGraphicsScene{
+class Board: public QObject{
     Q_OBJECT
+
+    QThread cloneThread;
 
 public:
     int l, b;
     int **board;
-    Board(QGraphicsScene *scene);
-    void genBoard(QGraphicsScene *scene);
+
     Player * player;
     Clone * past_self;
 
+    Board(QGraphicsScene *scene);
+    void genBoard(QGraphicsScene *scene);
+
+signals:
+    void startClone();
+
 public slots:
     void make_clone(QGraphicsScene *scene, const std::vector <Event> player_events);
+    void changeClonePos(int X, int Y);
 
 };
 
