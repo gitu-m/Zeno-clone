@@ -18,13 +18,19 @@ Clone::Clone(const std::vector<Event> player_events, QGraphicsScene *scene){
     scene->addItem(this);
     posX = 0;
     posY = 1;
-
     setPos(posX*40, posY*40);
+    
     this->player_events = player_events;
     this->scene = scene;
+    
     run = 1;
+
     QFuture<void> future = QtConcurrent::run(this,&Clone::start_moving);
+    
     connect(this,SIGNAL(makeMov()), this, SLOT(changePos()));
+
+    // future.waitForFinished();
+
 };
 
 void Clone::start_moving(){
@@ -82,5 +88,6 @@ void Clone::start_moving(){
 }
 
 void Clone::changePos(){
-    setPos(posX*40, posY*40);
+    if (run)
+        setPos(posX*40, posY*40);
 }

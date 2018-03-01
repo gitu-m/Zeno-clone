@@ -4,14 +4,26 @@
 
 TEMPLATE = app
 TARGET = Zeno
-INCLUDEPATH += .
+INCLUDEPATH += ./include
 
 # Input
-HEADERS += Board.h button.h Game.h Player.h Event.h Tesseract.h Tile.h \
-	Clone.h
+HEADERS +=	include/Board.h \
+		 	include/button.h \
+		 	include/Game.h \
+		 	include/Player.h \
+		 	include/Event.h \
+		 	include/Tesseract.h \
+		 	include/Tile.h \
+			include/Clone.h
 
-SOURCES += Board.cpp button.cpp Game.cpp main.cpp Player.cpp Tesseract.cpp Tile.cpp \
-	Clone.cpp
+SOURCES += 	main.cpp \
+			src/Board.cpp \
+			src/button.cpp \
+			src/Game.cpp \
+			src/Player.cpp \
+			src/Tesseract.cpp \
+			src/Tile.cpp \
+			src/Clone.cpp
 
 CONFIG += c++11
 
