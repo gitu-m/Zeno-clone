@@ -23,16 +23,14 @@ Game::Game(){
 void Game::Start(){
 	scene->clear();
 
-    // Setup Board for the current level
+    //Setup Board for the current level
     brd = new Board(scene);
 
     // Increase Level for Next Call
     Level++;
 
-    //If level is over, start next level
+    //Connecting the level over signal emitted by the player to the start slot to render the new level
     connect(brd->player, SIGNAL(level_over()),this,SLOT(Start()));
-
-
 }
 
 void Game::displayMenu(){

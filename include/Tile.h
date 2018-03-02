@@ -2,17 +2,18 @@
 
 #define TILE_H
 
-#include <QGraphicsRectItem>
+#include <QGraphicsPixmapItem>
 #include <QObject>
 
-class Tile:public QObject, public QGraphicsRectItem{
+class Tile:public QObject, public QGraphicsPixmapItem{
 	Q_OBJECT
 public:
-	Tile(int state,int posX, int posY);
-	int state, posX, posY;
+    int type;
+    int posX,posY;
 
-private:
-	void setGraphics();
+	Tile(int type,int posX,int posY);
+
+    void renderTile();
 
 public slots:
 	void makeMov();
@@ -22,4 +23,4 @@ signals:
 	void makeMovsignal();
 };
 
-#endif 
+#endif

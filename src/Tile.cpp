@@ -7,43 +7,32 @@
 
 extern Game * game;
 
-Tile::Tile(int state,int posX,int posY){
-	this->state = state;
+Tile::Tile(int type,int posX,int posY){
+    //Initializing the parameters for the tile object
+	this->type = type;
 	this->posX = posX;
 	this->posY = posY;
-	setGraphics();
+
+    renderTile();
+
 	connect(this,SIGNAL(makeMovsignal()),this,SLOT(makeMov()));
 }
 
-void Tile::setGraphics(){
-	QBrush brush;
-
-	if (state == 999)
-	{
-		brush.setStyle(Qt::SolidPattern);
-		brush.setColor(QColor(109,76,65));
-	}
-	else if (state == 1 || state == 255)
-	{
-		brush.setStyle(Qt::SolidPattern);
-		brush.setColor(QColor(215,204,200));
-	}
-	else if (state > 400 && state < 600)
-	{
-		brush.setStyle(Qt::SolidPattern);
-		brush.setColor(QColor(62,39,35));
-	}
-	else if (state > 200 && state < 400)
-	{
-		brush.setStyle(Qt::SolidPattern);
-		brush.setColor(QColor(255,193,7));
-	}
-	setBrush(brush);
+void Tile::renderTile(){
+    switch(type){
+        case 1 : setPixmap(QPixmap("./resources/Tiles/normal.png")); break;
+        case 2 : setPixmap(QPixmap("./resources/Tiles/start.png")); break;
+        case 3 : setPixmap(QPixmap("./resources/Tiles/end.png")); break;
+        case 4 : setPixmap(QPixmap("./resources/Tiles/trigger.png")); break;
+        case 5 : setPixmap(QPixmap("./resources/Tiles/moving.png")); break;
+        case 6 : setPixmap(QPixmap("./resources/Tiles/normal.png")); break;
+    }
 }
 
 int xToMove = 0, yToMove = 0;
 int posXLimit = 0, posYLimit = 0;
 int flag = 0;
+
 void Tile::makeMov(){
 	qDebug() <<x()<<y()<<"Called";
 	qDebug() <<game->brd->player->posX ;
@@ -53,41 +42,41 @@ void Tile::makeMov(){
 		flag = 1;
 		game->brd->player->setPos(posY*40,posX*40);
 	}
-	if (state > 400 && state < 600)
+	if (type > 400 && type < 600)
 	{
 		/* code */
 		game->brd->board[posX][posY] = 0;
-		if (state%10 != 0)
+		if (type%10 != 0)
 		{
-			// setPos((state%10)*40,0);
-			if (state > 500)
+			// setPos((type%10)*40,0);
+			if (type > 500)
 			{
-				xToMove = (state%10)*40;
-				state -= xToMove/20;
+				xToMove = (type%10)*40;
+				type -= xToMove/20;
 			}
 			else
 			{
-				xToMove = ((state - 500)%10)*40;
-				state -= xToMove/20;
+				xToMove = ((type - 500)%10)*40;
+				type -= xToMove/20;
 			}
 		}
 		else
 		{
-			if (state > 500)
+			if (type > 500)
 			{
-				yToMove = ((state/10)%10)*40;
-				state -= (yToMove/20)*10;
+				yToMove = ((type/10)%10)*40;
+				type -= (yToMove/20)*10;
 			}
 			else
 			{
-				// xToMove = ((500 - state)%10)*40;
-				// state += xToMove/20;
-				yToMove = (((state -500)/10)%10)*40;
-				state -= (yToMove/20)*10;
+				// xToMove = ((500 - type)%10)*40;
+				// type += xToMove/20;
+				yToMove = (((type -500)/10)%10)*40;
+				type -= (yToMove/20)*10;
 			}
-			// setPos(0,((state/10)%10)*40);
-			// yToMove = ((state/10)%10)*40;
-			// state -= (yToMove/20)*10;
+			// setPos(0,((type/10)%10)*40);
+			// yToMove = ((type/10)%10)*40;
+			// type -= (yToMove/20)*10;
 		}
 		posXLimit += xToMove;
 		posYLimit += yToMove;

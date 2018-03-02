@@ -96,7 +96,7 @@ void Player::keyPressEvent(QKeyEvent *event){
         }
 
         else if (typeid(*colliding_items[i]) == typeid(Tile)){
-            int checkVal = qgraphicsitem_cast<Tile *> (colliding_items[i]) -> state;
+            int checkVal = qgraphicsitem_cast<Tile *> (colliding_items[i]) -> type;
             // qDebug() <<checkVal;
             if (checkVal == 999){
             //Level over
@@ -115,7 +115,7 @@ void Player::keyPressEvent(QKeyEvent *event){
                 }
                 else
                 {
-                    qDebug()  << posX << " " << posY+(checkVal/10)%10 <<game->brd->tilePointers[posY+(checkVal/10)%10][posX]->state;
+                    qDebug()  << posX << " " << posY+(checkVal/10)%10 <<game->brd->tilePointers[posY+(checkVal/10)%10][posX]->type;
 
                     emit game->brd->tilePointers[posY+(checkVal/10)%10][posX]->makeMovsignal();
                 }
