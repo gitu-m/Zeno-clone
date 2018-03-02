@@ -102,6 +102,9 @@ void Board::make_clone(QGraphicsScene * scene, const std::vector<Event> player_e
     //Connecting the make move signal to change clone pos slot to move the clone
     connect(past_self, &Clone::makeMov , this, &Board::changeClonePos);
 
+    //Connecting the clone done signal to quit signal of the thread
+    connect(past_self, SIGNAL(cloneDone()), &cloneThread, SLOT(quit()));
+
     //The clone thread is the new thread which is responsible for clone's movements
     past_self->moveToThread(&cloneThread);
 

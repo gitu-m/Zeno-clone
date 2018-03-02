@@ -1,3 +1,6 @@
+#include <QMediaPlaylist>
+#include <QMediaPlayer>
+
 #include "Game.h"
 #include "Player.h"
 #include "Board.h"
@@ -12,6 +15,18 @@ Game::Game(){
 
     //Setting the main scene to be displayed to the current scene
     setScene(scene);
+
+    //Create playlist
+    QMediaPlaylist *playlist = new QMediaPlaylist();
+    playlist->addMedia(QUrl("qrc:/sounds/AmbientMusic1.wav"));
+    playlist->setPlaybackMode(QMediaPlaylist::Loop);
+
+    //Play background music
+    QMediaPlayer * bg_music = new QMediaPlayer();
+    bg_music->setPlaylist(playlist);
+    bg_music->play();
+
+    playlist->moveToThread(&mthread);
 
     //Setting the current level to 0
 	Level = 0;

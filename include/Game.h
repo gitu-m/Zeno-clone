@@ -13,6 +13,8 @@
 class Game : public QGraphicsView{
 	Q_OBJECT
 
+    QThread mthread;
+
 public:
 	int Level;
 

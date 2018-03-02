@@ -103,6 +103,7 @@ void Player::keyPressEvent(QKeyEvent *event){
                 if (game->brd->past_self != NULL){
                     game->brd->past_self->run = 0;
                 }
+
                 emit level_over();
             }
             else if (checkVal > 200 && checkVal < 400){

@@ -8,7 +8,7 @@ INCLUDEPATH += ./include
 
 # Input
 HEADERS +=	include/Board.h \
-		 	include/button.h \
+			include/Button.h \
 		 	include/Game.h \
 		 	include/Player.h \
 		 	include/Event.h \
@@ -18,7 +18,7 @@ HEADERS +=	include/Board.h \
 
 SOURCES += 	main.cpp \
 			src/Board.cpp \
-			src/button.cpp \
+			src/Button.cpp \
 			src/Game.cpp \
 			src/Player.cpp \
 			src/Tesseract.cpp \
@@ -27,4 +27,8 @@ SOURCES += 	main.cpp \
 
 CONFIG += c++11
 
-QT += core gui widgets concurrent
+QT += core gui widgets concurrent\
+	multimedia
+
+RESOURCES += \
+    res.qrc

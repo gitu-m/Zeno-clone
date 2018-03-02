@@ -30,6 +30,7 @@ signals:
 
     void time_move(Event);
     void makeMov(int , int );
+    void cloneDone();
 
 public slots:
 

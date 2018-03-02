@@ -90,4 +90,8 @@ void Clone::start_moving(){
             i++;
         }
     }
+
+    this->setRect(0,0,0,0); // Make clone invisble
+
+    emit cloneDone();
 }
