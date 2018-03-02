@@ -1,10 +1,13 @@
 #ifndef BOARD_H
+
 #define BOARD_H
+
+#include <QGraphicsScene>
+#include <QtCore>
+
 #include "Player.h"
 #include "Clone.h"
 #include "Tile.h"
-#include <QGraphicsScene>
-#include <QtCore>
 
 class Board: public QObject{
     Q_OBJECT
@@ -19,7 +22,7 @@ public:
     Clone * past_self;
 	Tile ***tilePointers;
 	QGraphicsScene *scene;
-	
+
     Board(QGraphicsScene *scene);
     void genBoard(QGraphicsScene *scene);
 

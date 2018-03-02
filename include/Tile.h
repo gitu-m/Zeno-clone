@@ -1,8 +1,10 @@
 #ifndef TILE_H
+
 #define TILE_H
 
 #include <QGraphicsRectItem>
 #include <QObject>
+
 class Tile:public QObject, public QGraphicsRectItem{
 	Q_OBJECT
 public:
@@ -10,7 +12,7 @@ public:
 	int state, posX, posY;
 
 private:
-	void setGraphics();	
+	void setGraphics();
 
 public slots:
 	void makeMov();
@@ -20,4 +22,4 @@ signals:
 	void makeMovsignal();
 };
 
-#endif // TILE_H
+#endif 

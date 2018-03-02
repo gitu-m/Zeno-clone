@@ -1,4 +1,5 @@
 #ifndef EVENT_H
+
 #define EVENT_H
 
 #include <QKeyEvent>
@@ -13,4 +14,4 @@ public:
 
 };
 
-#endif // EVENT_H
+#endif

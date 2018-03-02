@@ -1,10 +1,12 @@
 #ifndef CLONE_H
+
 #define CLONE_H
 
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
 #include <chrono>
-#include <queue>
+#include <vector>
+
 #include "Event.h"
 
 class Clone: public QObject, public QGraphicsRectItem{
@@ -35,4 +37,4 @@ public slots:
 
 };
 
-#endif // CLONE_H
+#endif

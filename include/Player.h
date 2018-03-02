@@ -1,9 +1,11 @@
 #ifndef PLAYER_H
+
 #define PLAYER_H
 
 #include <QGraphicsRectItem>
 #include <chrono>
-#include <queue>
+#include <vector>
+
 #include "Event.h"
 
 class Player: public QObject, public QGraphicsRectItem{
@@ -22,4 +24,4 @@ signals:
     void clone(QGraphicsScene *, std::vector <Event>);
 };
 
-#endif // MYRECT_H
+#endif 

@@ -1,17 +1,18 @@
-#include "Board.h"
-#include "Player.h"
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
 #include <QBrush>
 #include <iostream>
 #include <chrono>
-#include "Tile.h"
-#include "Tesseract.h"
-#include "Clone.h"
-
 #include <QDebug>
 #include <QtConcurrent>
 #include <typeinfo>
+
+#include "Tile.h"
+#include "Tesseract.h"
+#include "Clone.h"
+#include "Board.h"
+#include "Player.h"
+
 /*
 *   0   - No Tile
 *   1   - Regular Tile
@@ -41,11 +42,11 @@ int level[][5] =  { {1  ,0  ,0  ,0  ,0  },
                 delete tilePointers[j][i];
             }
             if (board[j][i] != 0) { // Render the tile
-                // Tile * tile = 
+                // Tile * tile =
                 tilePointers[j][i] = new Tile(board[j][i],j,i);;
                 tilePointers[j][i]->setRect((11-l)*20 + i*40,(11-b)*20 + j*40,40,40);
                 scene->addItem(tilePointers[j][i]); // Add tile to scene
-                
+
                 board[j][i] = 1;
             }
         }
@@ -70,11 +71,11 @@ void Board::make_clone(QGraphicsScene * scene, const std::vector<Event> player_e
     //             delete tilePointers[j][i];
     //         }
     //         if (board[j][i] != 0) { // Render the tile
-    //             // Tile * tile = 
+    //             // Tile * tile =
     //             tilePointers[j][i] = new Tile(board[j][i],j,i);;
     //             tilePointers[j][i]->setRect((11-l)*20 + i*40,(11-b)*20 + j*40,40,40);
     //             scene->addItem(tilePointers[j][i]); // Add tile to scene
-                
+
     //             board[j][i] = 1;
     //         }
     //     }
@@ -135,7 +136,7 @@ Board::Board(QGraphicsScene * scene){
     this->scene = scene;
     int initposX = (11-l)*20;
     int initposY = (11-b)*20;
-    
+
 
     //Set tile positions
 
@@ -160,7 +161,7 @@ Board::Board(QGraphicsScene * scene){
         for (int j = 0; j < b; ++j) {
             // tilePointers[j][i] = NULL;
             if (board[j][i] != 0) { // Render the tile
-                // Tile * tile = 
+                // Tile * tile =
                 tilePointers[j][i] = new Tile(board[j][i],j,i);;
                 tilePointers[j][i]->setRect(initposX + i*40,initposY + j*40,40,40);
                 scene->addItem(tilePointers[j][i]); // Add tile to scene
@@ -177,7 +178,7 @@ Board::Board(QGraphicsScene * scene){
                     tess->setPos(initposX + i*40 + 12 ,initposY + 12 + j*40);
                     scene->addItem(tess);
                 }
-                
+
                 board[j][i] = 1;
             }
         }
@@ -199,4 +200,3 @@ Board::Board(QGraphicsScene * scene){
     connect(player, SIGNAL(clone(QGraphicsScene *, std::vector <Event>)), this, SLOT(make_clone(QGraphicsScene *, const std::vector <Event>)));
 
 }
-

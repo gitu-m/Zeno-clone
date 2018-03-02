@@ -1,4 +1,5 @@
 #ifndef TESSERACT_H
+
 #define TESSERACT_H
 
 #include <QGraphicsRectItem>
@@ -11,4 +12,4 @@ public:
 
 };
 
-#endif // TESSERACT_H
+#endif 

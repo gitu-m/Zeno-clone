@@ -1,15 +1,17 @@
-#include "Clone.h"
 #include <queue>
-#include "Event.h"
-#include "Player.h"
 #include <QKeyEvent>
-#include "Board.h"
-#include "Game.h"
 #include <chrono>
 #include <QList>
 #include <QtConcurrent>
 #include <QDebug>
 #include <typeinfo>
+
+#include "Event.h"
+#include "Player.h"
+#include "Clone.h"
+#include "Board.h"
+#include "Game.h"
+
 extern Game * game;
 
 Clone::Clone(const std::vector<Event> player_events, QGraphicsScene *scene){
@@ -19,10 +21,10 @@ Clone::Clone(const std::vector<Event> player_events, QGraphicsScene *scene){
     posX = 0;
     posY = 1;
     setPos(posX*40, posY*40);
-    
+
     this->player_events = player_events;
     this->scene = scene;
-    
+
     run = 1;
 
 };
@@ -116,4 +118,3 @@ void Clone::start_moving(){
     }
    // delete this;
 }
-

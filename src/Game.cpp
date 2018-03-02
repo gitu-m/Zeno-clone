@@ -1,19 +1,23 @@
 #include "Game.h"
 #include "Player.h"
 #include "Board.h"
-#include "button.h"
+#include "Button.h"
 
 Game::Game(){
-	// create the scene
+	//Creating a scene to render the game
     scene = new QGraphicsScene();
-    scene->setSceneRect(0,0,640,480); // make the scene 800x600 instead of infinity by infinity (default)
 
-    // make the newly created scene the scene to visualize (since Game is a QGraphicsView Widget,
-    // it can be used to visualize scenes)
+    //Setting the dimensions of the current scene
+    scene->setSceneRect(0,0,640,480);
+
+    //Setting the main scene to be displayed to the current scene
     setScene(scene);
-	
-	Level = 0;   
-    DisplayMenu();
+
+    //Setting the current level to 0
+	Level = 0;
+
+    //Displaying the menu
+    displayMenu();
 }
 
 void Game::Start(){
@@ -28,34 +32,42 @@ void Game::Start(){
     //If level is over, start next level
     connect(brd->player, SIGNAL(level_over()),this,SLOT(Start()));
 
-    
+
 }
 
-void Game::DisplayMenu(){
-
+void Game::displayMenu(){
+    //Setting the title string for the game
     QGraphicsTextItem* titleText = new QGraphicsTextItem(QString("Zeno"));
     QFont titleFont("Times",50);
     titleText->setFont(titleFont);
+
+    //Setting the co-ordinates for the title string in the current scene
     int txPos = this->width()/2 - titleText->boundingRect().width()/2;
     int tyPos = 150;
     titleText->setPos(txPos,tyPos);
     scene->addItem(titleText);
 
-    // create the play button
+    //Setting the text in the start button
     Button* playButton = new Button(QString("Play"));
+
+    //Setting the co-ordinates for the play button in the current scene
     int bxPos = this->width()/2 - playButton->boundingRect().width()/2;
     int byPos = 275;
     playButton->setPos(bxPos,byPos);
-    connect(playButton,SIGNAL(clicked()),this,SLOT(Start()));
     scene->addItem(playButton);
 
-    // create the quit button
+    //Connecting the signal clicked to start the first level upon clicking
+    connect(playButton,SIGNAL(clicked()),this,SLOT(Start()));
+
+    //Setting the text in the quit button
     Button* quitButton = new Button(QString("Quit"));
+
+    //Setting the co-ordinates for the quit button in the current scene
     int qxPos = this->width()/2 - quitButton->boundingRect().width()/2;
     int qyPos = 350;
     quitButton->setPos(qxPos,qyPos);
-    connect(quitButton,SIGNAL(clicked()),this,SLOT(close()));
     scene->addItem(quitButton);
 
+    //Connecting the signal clicked to quit the game upon clicking
+    connect(quitButton,SIGNAL(clicked()),this,SLOT(close()));
 }
-

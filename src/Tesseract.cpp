@@ -1,5 +1,6 @@
-#include "Tesseract.h"
 #include <QBrush>
+
+#include "Tesseract.h"
 
 Tesseract::Tesseract(){
 

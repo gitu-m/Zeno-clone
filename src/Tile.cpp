@@ -1,8 +1,10 @@
-#include "Tile.h"
-#include "Game.h"
 #include <QBrush>
 #include <QTimer>
 #include <QDebug>
+
+#include "Tile.h"
+#include "Game.h"
+
 extern Game * game;
 
 Tile::Tile(int state,int posX,int posY){
@@ -15,7 +17,7 @@ Tile::Tile(int state,int posX,int posY){
 
 void Tile::setGraphics(){
 	QBrush brush;
-	
+
 	if (state == 999)
 	{
 		brush.setStyle(Qt::SolidPattern);
@@ -61,12 +63,12 @@ void Tile::makeMov(){
 			if (state > 500)
 			{
 				xToMove = (state%10)*40;
-				state -= xToMove/20; 
+				state -= xToMove/20;
 			}
 			else
 			{
 				xToMove = ((state - 500)%10)*40;
-				state -= xToMove/20; 
+				state -= xToMove/20;
 			}
 		}
 		else
@@ -79,7 +81,7 @@ void Tile::makeMov(){
 			else
 			{
 				// xToMove = ((500 - state)%10)*40;
-				// state += xToMove/20; 
+				// state += xToMove/20;
 				yToMove = (((state -500)/10)%10)*40;
 				state -= (yToMove/20)*10;
 			}
