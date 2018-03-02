@@ -2,6 +2,7 @@
 #define BOARD_H
 #include "Player.h"
 #include "Clone.h"
+#include "Tile.h"
 #include <QGraphicsScene>
 #include <QtCore>
 
@@ -16,7 +17,9 @@ public:
 
     Player * player;
     Clone * past_self;
-
+	Tile ***tilePointers;
+	QGraphicsScene *scene;
+	
     Board(QGraphicsScene *scene);
     void genBoard(QGraphicsScene *scene);
 

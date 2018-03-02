@@ -9,7 +9,7 @@
 #include <QList>
 #include <QtConcurrent>
 #include <QDebug>
-
+#include <typeinfo>
 extern Game * game;
 
 Clone::Clone(const std::vector<Event> player_events, QGraphicsScene *scene){
@@ -85,10 +85,35 @@ void Clone::start_moving(){
 
             emit makeMov(posX*40, posY*40);
 
+
             i++;
 
+            // QList<QGraphicsItem *> colliding_items = collidingItems();
+
+            // for (int i = 0, n = colliding_items.size(); i < n ; i++){
+
+            //     if (typeid(*colliding_items[i]) == typeid(Tile)){
+            //         int checkVal = qgraphicsitem_cast<Tile *> (colliding_items[i]) -> state;
+            //         // qDebug() <<checkVal;
+            //         if (checkVal > 200 && checkVal < 400){
+            //             // emit moveTile()
+            //                 qDebug() <<checkVal*1;
+            //             if (checkVal%10 != 0)
+            //             {
+            //                 qDebug() << posX+checkVal%10<< " " << posY;
+            //                 emit game->brd->tilePointers[posY][posX+checkVal%10]->makeMovsignal();
+            //             }
+            //             else
+            //             {
+            //                 qDebug()  << posX << " " << posY+(checkVal/10)%10 <<game->brd->tilePointers[posY+(checkVal/10)%10][posX]->state;
+
+            //                 emit game->brd->tilePointers[posY+(checkVal/10)%10][posX]->makeMovsignal();
+            //             }
+            //         }
+            //     }
+            // }
         }
     }
-//    delete this;
+   // delete this;
 }
 

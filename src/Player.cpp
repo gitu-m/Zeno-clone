@@ -25,7 +25,7 @@ void Player::keyPressEvent(QKeyEvent *event){
     std::chrono::steady_clock::time_point time_event = std::chrono::steady_clock::now();
     key_pressed.key_time = time_event - time_spawned;
 
-
+    
 
 
     if (event->key() == Qt::Key_Left){ // Move left
@@ -79,33 +79,46 @@ void Player::keyPressEvent(QKeyEvent *event){
 
     //Check is player is colliding with anything
 
-     QList<QGraphicsItem *> colliding_items = collidingItems();
+    QList<QGraphicsItem *> colliding_items = collidingItems();
 
-     for (int i = 0, n = colliding_items.size(); i < n ; i++){
+    for (int i = 0, n = colliding_items.size(); i < n ; i++){
 
-         if (typeid(*colliding_items[i]) == typeid(Tesseract)){
-             //Remove tesseract
-             //TODO add tesseract functionality
+        if (typeid(*colliding_items[i]) == typeid(Tesseract)){
+            //Remove tesseract
+            //TODO add tesseract functionality
 
-             scene()->removeItem(colliding_items[i]);
+            scene()->removeItem(colliding_items[i]);
 
-             delete colliding_items[i];
-             emit clone(scene(), event_queue);
+            delete colliding_items[i];
+            emit clone(scene(), event_queue);
 
-         }
+        }
 
-         else if (typeid(*colliding_items[i]) == typeid(Tile)){
-
-             if (qgraphicsitem_cast<Tile *> (colliding_items[i]) -> state == 999){
-                //Level over
-                if (game->brd->past_self != NULL)
-                {
+        else if (typeid(*colliding_items[i]) == typeid(Tile)){
+            int checkVal = qgraphicsitem_cast<Tile *> (colliding_items[i]) -> state;
+            // qDebug() <<checkVal;
+            if (checkVal == 999){
+            //Level over
+                if (game->brd->past_self != NULL){
                     game->brd->past_self->run = 0;
                 }
                 emit level_over();
+            }
+            else if (checkVal > 200 && checkVal < 400){
+                // emit moveTile()
+                    qDebug() <<checkVal*1;
+                if (checkVal%10 != 0)
+                {
+                    qDebug() << posX+checkVal%10<< " " << posY;
+                    emit game->brd->tilePointers[posY][posX+checkVal%10]->makeMovsignal();
+                }
+                else
+                {
+                    qDebug()  << posX << " " << posY+(checkVal/10)%10 <<game->brd->tilePointers[posY+(checkVal/10)%10][posX]->state;
 
-             }
-
-         }
-     }
+                    emit game->brd->tilePointers[posY+(checkVal/10)%10][posX]->makeMovsignal();
+                }
+            }
+        }
+    }
 }
