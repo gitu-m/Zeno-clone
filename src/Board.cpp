@@ -40,36 +40,37 @@ Board::Board(QGraphicsScene * scene){
     initposY = (11-b)*20;
 
     //Dynamically allocate board and tilePointers
-    board = new int*[l];
-    tilePointers = new Tile**[l];
+    board = new int*[b];
+    tilePointers = new Tile**[b];
 
-    for (int i = 0 ; i < l ; i++){
-        board[i] = new int[b];
-        tilePointers[i] = new Tile*[b];
+    for (int i = 0 ; i < b ; i++){
+        board[i] = new int[l];
+        tilePointers[i] = new Tile*[l];
     }
 
     //Copying the state of the current level into this board
-    for (int i = 0 ; i < l ; i++){
-        for ( int j = 0 ; j < b ; j++){
+    for (int i = 0 ; i < b ; i++){
+        for(int j = 0 ;j < l;j++){
             board[i][j] = thisLevel->level1Board[i][j];
+            //qDebug() << board[i][j];
         }
     }
 
-    for (int i = 0; i < l; ++i) {
-        for (int j = 0; j < b; ++j) {
+    for (int i = 0; i < b; ++i) {
+        for (int j = 0; j < l; ++j) {
             //Checking if a tile object exists at the current co-ordinates
-            if (board[j][i] != 0) {
+            if (board[i][j]) {
                 //Creating a tile object and associating it with the appropriate positional pointer
-                tilePointers[j][i] = new Tile(board[j][i],j,i);
-                tilePointers[j][i]->setPos(initposX + i*40,initposY + j*40);
+                tilePointers[i][j] = new Tile(board[i][j],i,j);
+                tilePointers[i][j]->setPos(initposY + j*40,initposX + i*40);
 
                 //Adding the tile to the current scene
-                scene->addItem(tilePointers[j][i]);
+                scene->addItem(tilePointers[i][j]);
 
                 //Spawning a tesseract
-                if (board[j][i] == 6){
+                if (board[i][j] == 6){
                     Tesseract * tess = new Tesseract();
-                    tess->setPos(initposX + i*40 + 12 ,initposY + 12 + j*40);
+                    tess->setPos(initposY + 12 + j*40,initposX + i*40 + 12);
                     scene->addItem(tess);
                 }
             }
@@ -122,7 +123,7 @@ void Board::changeClonePos(int X, int Y){
             //If the tile is a trigger
             if (tileType == 4){
                 //Triggering the movable tile
-                tilePointers[thisLevel->moveStartPosX][thisLevel->moveStartPosY]->moveTile();
+                tilePointers[thisLevel->moveStartPosY][thisLevel->moveStartPosX]->moveTile();
             }
         }
     }

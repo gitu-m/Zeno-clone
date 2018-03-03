@@ -31,6 +31,9 @@ Player::Player(int initposX,int initposY,int playerStartPosX,int playerStartPosY
 }
 
 void Player::keyPressEvent(QKeyEvent *event){
+    //Check if the player is waiting
+    while(isWaiting);
+
     //Creating a new event to store the information of the current input
     Event *key_pressed =  new Event();
 
@@ -85,6 +88,11 @@ void Player::keyPressEvent(QKeyEvent *event){
             //Deleting the tesseract object
             delete colliding_items[i];
 
+            if(game->brd->tilePointers[game->brd->thisLevel->moveStartPosY][game->brd->thisLevel->moveStartPosX]->isTriggered){
+                //Setting the position of the moving tile to default position
+                game->brd->tilePointers[game->brd->thisLevel->moveStartPosY][game->brd->thisLevel->moveStartPosX]->moveTile();
+            }
+
             //Emitting the signal for clone generation
             emit clone(scene(), event_queue);
         }
@@ -103,7 +111,9 @@ void Player::keyPressEvent(QKeyEvent *event){
             //If the tile is a trigger
             else if (tileType == 4){
                 //Invoking the move tile method on the tile which is triggered by current tile
-                game->brd->tilePointers[game->brd->thisLevel->moveStartPosX][game->brd->thisLevel->moveStartPosY]->moveTile();
+                if(!game->brd->tilePointers[game->brd->thisLevel->moveStartPosY][game->brd->thisLevel->moveStartPosX]->isTriggered){
+                    game->brd->tilePointers[game->brd->thisLevel->moveStartPosY][game->brd->thisLevel->moveStartPosX]->moveTile();
+                }
             }
         }
     }

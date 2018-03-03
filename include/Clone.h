@@ -24,7 +24,7 @@ public:
 
 signals:
 
-    void makeMove(int , int );
+    void makeMove(int,int);
 
 public slots:
 

@@ -36,28 +36,28 @@ void Clone::start_moving(){
         if (std::chrono::steady_clock::now() - time_spawned >= player_events[i].key_time){
             if (player_events[i].key->key() == Qt::Key_Left){
                 if (posX-1 >= 0 && game->brd->board[posY][posX-1]){
-                    qDebug() << "Left" << '\n';
+                    //qDebug() << "Left" << '\n';
                     posX--;
                 }
             }
 
             else if (player_events[i].key->key() == Qt::Key_Right){
                 if (posX+1 >= 0 && game->brd->board[posY][posX+1]){
-                    qDebug() << "Right" << '\n';
+                    //qDebug() << "Right" << '\n';
                     posX++;
                 }
             }
 
             else if (player_events[i].key->key() == Qt::Key_Up){
                 if (posY-1 >= 0 && game->brd->board[posY-1][posX]){
-                    qDebug() << "Up" << '\n';
+                    //qDebug() << "Up" << '\n';
                     posY--;
                 }
             }
 
             else if (player_events[i].key->key() == Qt::Key_Down){
                 if (posY+1 >= 0 && game->brd->board[posY+1][posX]){
-                    qDebug() << "Down" << '\n';
+                    //qDebug() << "Down" << '\n';
                     posY++;
                 }
             }

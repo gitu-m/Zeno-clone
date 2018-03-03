@@ -13,8 +13,9 @@ class Player: public QObject, public QGraphicsRectItem{
     Q_OBJECT
 public:
     int posX, posY;
-
-    std::vector <Event> event_queue; 
+    bool isWaiting = false;
+    
+    std::vector <Event> event_queue;
     std::chrono::steady_clock::time_point time_spawned;
 
     Player(int initposX,int initposY,int playerStartPosX,int playerStartPosY,QGraphicsScene *scene);
