@@ -15,6 +15,10 @@ class Clone: public QObject, public QGraphicsRectItem{
 public:
     int posX, posY;
 
+    int run = 1;
+
+    int fadeTrigger = 0;
+
     std::vector<Event> player_events;
     std::chrono::steady_clock::time_point time_spawned;
 
@@ -25,6 +29,7 @@ public:
 signals:
 
     void makeMove(int , int );
+    void cloneDone();
 
 public slots:
 

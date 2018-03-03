@@ -4,6 +4,7 @@
 
 #include <QGraphicsScene>
 #include <QtCore>
+#include <QDebug>
 
 #include "Tile.h"
 #include "Player.h"
@@ -27,6 +28,7 @@ public:
 	QGraphicsScene *scene;
 
     Board(QGraphicsScene *scene);
+    ~Board();
 
     void genBoard(QGraphicsScene *scene);
 

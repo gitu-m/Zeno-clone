@@ -1,5 +1,6 @@
 #include <QMediaPlaylist>
 #include <QMediaPlayer>
+#include <QDebug>
 
 #include "Game.h"
 #include "Player.h"
@@ -36,7 +37,12 @@ Game::Game(){
 }
 
 void Game::Start(){
+
 	scene->clear();
+
+    qDebug() << "start";
+
+    if (Level != 0) delete brd;
 
     //Setup Board for the current level
     brd = new Board(scene);

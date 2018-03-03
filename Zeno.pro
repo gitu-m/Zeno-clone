@@ -14,7 +14,8 @@ HEADERS +=	include/Board.h \
 		 	include/Event.h \
 		 	include/Tesseract.h \
 		 	include/Tile.h \
-			include/Clone.h
+                        include/Clone.h \
+                        include/Levels.h
 
 SOURCES += 	main.cpp \
 			src/Board.cpp \
@@ -23,7 +24,7 @@ SOURCES += 	main.cpp \
 			src/Player.cpp \
 			src/Tesseract.cpp \
 			src/Tile.cpp \
-			src/Clone.cpp
+			src/Clone.cpp                       
 
 CONFIG += c++11
 

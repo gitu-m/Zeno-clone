@@ -28,43 +28,65 @@ Clone::Clone(const std::vector<Event> player_events, QGraphicsScene *scene){
 };
 
 void Clone::start_moving(){
+
+    qDebug() << "lol";
+    run = 1;
+
     int i=0;
+
 
     time_spawned = std::chrono::steady_clock::now();
 
-    while(i < player_events.size()){
+    while(i < player_events.size() && run){
+
         if (std::chrono::steady_clock::now() - time_spawned >= player_events[i].key_time){
+
             if (player_events[i].key->key() == Qt::Key_Left){
-                if (posX-1 >= 0 && game->brd->board[posY][posX-1]){
+
+                if (posX-1 >= 0 && game->brd->board[posY][posX-1] && game->brd->board[posY][posX-1] != 8){
+
                     qDebug() << "Left" << '\n';
-                    posX--;
+                    posX--;                
                 }
             }
 
             else if (player_events[i].key->key() == Qt::Key_Right){
-                if (posX+1 >= 0 && game->brd->board[posY][posX+1]){
+
+                if (posX+1 >= 0 && game->brd->board[posY][posX+1] && game->brd->board[posY][posX+1] != 8){
+
                     qDebug() << "Right" << '\n';
                     posX++;
                 }
             }
 
             else if (player_events[i].key->key() == Qt::Key_Up){
-                if (posY-1 >= 0 && game->brd->board[posY-1][posX]){
+
+                if (posY-1 >= 0 && game->brd->board[posY-1][posX] && game->brd->board[posY-1][posX] != 8){
+
                     qDebug() << "Up" << '\n';
                     posY--;
                 }
             }
 
             else if (player_events[i].key->key() == Qt::Key_Down){
-                if (posY+1 >= 0 && game->brd->board[posY+1][posX]){
+
+                if (posY+1 >= 0 && game->brd->board[posY+1][posX] && game->brd->board[posY+1][posX] != 8){
+
                     qDebug() << "Down" << '\n';
                     posY++;
                 }
             }
 
-            emit makeMove(posX*40, posY*40);
+            if (run) emit makeMove(posX*40, posY*40);
 
             ++i;
         }
+
+
     }
+
+    //Make clone invisble
+    this->setRect(0,0,0,0);
+
+    emit cloneDone();
 }

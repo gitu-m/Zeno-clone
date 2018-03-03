@@ -46,25 +46,27 @@ void Player::keyPressEvent(QKeyEvent *event){
 
     //Logic for moving the player object
     if (event->key() == Qt::Key_Left){
-        if (posX-1 >= 0 && game->brd->board[posY][posX-1]){
+        if (posX-1 >= 0 && game->brd->board[posY][posX-1] && game->brd->board[posY][posX-1] != 8){
             posX--;
         }
     }
 
     else if (event->key() == Qt::Key_Right){
-        if (posX+1 < game->brd->l && game->brd->board[posY][posX+1]){
+        if (posX+1 < game->brd->l && game->brd->board[posY][posX+1] && game->brd->board[posY][posX+1] != 8){
             posX++;
         }
     }
 
     else if (event->key() == Qt::Key_Up){
-        if (posY-1 >= 0 && game->brd->board[posY-1][posX]){
+        if (posY-1 >= 0 && game->brd->board[posY-1][posX] && game->brd->board[posY-1][posX] != 8){
             posY--;
+
+            qDebug() << game->brd->board[posY][posX];
         }
     }
 
     else if (event->key() == Qt::Key_Down){
-        if (posY+1 < game->brd->b && game->brd->board[posY+1][posX]){
+        if (posY+1 < game->brd->b && game->brd->board[posY+1][posX] && game->brd->board[posY+1][posX] != 8){
             posY++;
         }
     }
@@ -87,6 +89,13 @@ void Player::keyPressEvent(QKeyEvent *event){
 
             //Emitting the signal for clone generation
             emit clone(scene(), event_queue);
+
+            if (fadeTrigger == 1){// Emit untrigger signal
+
+                fadeTrigger = 0;
+
+                emit game->brd->tilePointers[game->brd->thisLevel->fadeTriggerPosY][game->brd->thisLevel->fadeTriggerPosX]->fadeTileUntrigger();
+            }
         }
 
         //If the colliding object is a tile
@@ -96,14 +105,48 @@ void Player::keyPressEvent(QKeyEvent *event){
 
             //If the tile is the end tile
             if (tileType == 3){
-            //Level over
+
+                qDebug() << "done";
+
+                //Level over
                 emit level_over();
             }
 
             //If the tile is a trigger
             else if (tileType == 4){
+
+                if (fadeTrigger == 1){// Emit untrigger signal
+
+                    fadeTrigger = 0;
+
+                    emit game->brd->tilePointers[game->brd->thisLevel->fadeTriggerPosY][game->brd->thisLevel->fadeTriggerPosX]->fadeTileUntrigger();
+                }
+
                 //Invoking the move tile method on the tile which is triggered by current tile
-                game->brd->tilePointers[game->brd->thisLevel->moveStartPosX][game->brd->thisLevel->moveStartPosY]->moveTile();
+
+//                qDebug() << game->brd->thisLevel->movPosX << " " << game->brd->thisLevel->moveStartPosY;
+                game->brd->tilePointers[game->brd->thisLevel->moveStartPosY][game->brd->thisLevel->moveStartPosX]->moveTile();
+            }
+
+            else if(tileType == 7){
+
+                fadeTrigger = 1;
+                emit qgraphicsitem_cast<Tile *>(colliding_items[i])->fadeTileTriggered();
+            }
+
+            else if(tileType == 8){
+
+                //Game over, emitting level over for now
+                //TODO write a game over signal and functionality
+
+                emit level_over();
+            }
+
+            else if (fadeTrigger == 1){// Emit untrigger signal
+
+                fadeTrigger = 0;
+
+                emit game->brd->tilePointers[game->brd->thisLevel->fadeTriggerPosY][game->brd->thisLevel->fadeTriggerPosX]->fadeTileUntrigger();
             }
         }
     }

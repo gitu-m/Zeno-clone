@@ -20,6 +20,17 @@ public:
 
 	//Method to move tile
 	void moveTile();
+
+signals:
+    void fadeTileTriggered();
+    void fadeTileUntrigger();
+
+public slots:
+
+    //Method to fade tile
+    void fadeTile();
+    void unfadeTile();
+
 };
 
 #endif
