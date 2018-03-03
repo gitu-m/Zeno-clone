@@ -48,41 +48,40 @@ Board::Board(QGraphicsScene * scene){
 
         board[i] = new int[b];
         tilePointers[i] = new Tile*[b];
+
     }
 
     //Copying the state of the current level into this board
     for (int i = 0 ; i < l ; i++){
-
         for ( int j = 0 ; j < b ; j++){
 
             board[i][j] = thisLevel->level1Board[i][j];
+            //qDebug() << board[i][j];
         }
     }
 
     for (int i = 0; i < l; ++i) {
-        for (int j = 0; j < b; ++j) {
+           for (int j = 0; j < b; ++j) {
 
-            //Checking if a tile object exists at the current co-ordinates
-            if (board[j][i] != 0) {
+               //Checking if a tile object exists at the current co-ordinates
+               if (board[j][i]) {
+                   //Creating a tile object and associating it with the appropriate positional pointer
+                   tilePointers[j][i] = new Tile(board[j][i],i,j);
+                   tilePointers[j][i]->setPos(initposX + i*40,initposY + j*40);
 
-                //Creating a tile object and associating it with the appropriate positional pointer
-                tilePointers[j][i] = new Tile(board[j][i],i,j);
-                tilePointers[j][i]->setPos(initposX + i*40,initposY + j*40);
+                   //Adding the tile to the current scene
+                   scene->addItem(tilePointers[j][i]);
 
-                //Adding the tile to the current scene
-                scene->addItem(tilePointers[j][i]);
+                   //Spawning a tesseract
+                   if (board[j][i] == 6){
+                       Tesseract * tess = new Tesseract();
+                       tess->setPos(initposX + 12 + i*40,initposY + j*40 + 12);
+                       scene->addItem(tess);
+                   }
+               }
+           }
+       }
 
-                //Spawning a tesseract
-                if (board[j][i] == 6){
-
-                    Tesseract * tess = new Tesseract();
-                    tess->setPos(initposX + i*40 + 12 ,initposY + 12 + j*40);
-                    scene->addItem(tess);
-
-                }
-            }
-        }
-    }
 
     //Connect fade tile trigger signals
     for ( int i = 0 ; i < thisLevel->fadeTileCount ; i++){
@@ -157,6 +156,7 @@ void Board::changeClonePos(int X, int Y){
 
     qDebug() << "lol";
 
+    //Check is player is colliding with another object
     QList<QGraphicsItem *> colliding_items = past_self->collidingItems();
 
     //Iterating through the list of colliding objects to take an appropriate measure
@@ -168,33 +168,52 @@ void Board::changeClonePos(int X, int Y){
             //Checking the type of the tile
             int tileType = qgraphicsitem_cast<Tile *>(colliding_items[i])->type;
 
-            //If the tile is a move trigger
-            if (tileType == 4){
+            //If the tile is the end tile
+            if (tileType == 3){
 
-                //Invoking the move tile method on the tile which is triggered by current tile
+                qDebug() << "done";
 
-//                qDebug() << game->brd->thisLevel->movPosX << " " << game->brd->thisLevel->moveStartPosY;
-                tilePointers[thisLevel->moveStartPosY][thisLevel->moveStartPosX]->moveTile();
+                //Level over
+                emit player->level_over();
             }
 
-            //If the tile is a fade trigger
+            //If the tile is a trigger
+            else if (tileType == 4){
+
+                if (past_self->fadeTrigger == 1){// Emit untrigger signal
+
+                    past_self->fadeTrigger = 0;
+
+                    emit tilePointers[thisLevel->fadeTriggerPosY][thisLevel->fadeTriggerPosX]->fadeTileUntrigger();
+                }
+
+                //Invoking the move tile method on the tile which is triggered by current tile
+                if(!tilePointers[thisLevel->moveStartPosY][thisLevel->moveStartPosX]->isTriggered){
+
+                    tilePointers[thisLevel->moveStartPosY][thisLevel->moveStartPosX]->moveTile();
+                }
+            }
+
             else if(tileType == 7){
 
                 past_self->fadeTrigger = 1;
                 emit qgraphicsitem_cast<Tile *>(colliding_items[i])->fadeTileTriggered();
             }
 
-            if (past_self->fadeTrigger == 1 && tileType != 7){// Emit untrigger signal
+            else if(tileType == 8){
 
-                qDebug() << "lol";
+                //Game over, emitting level over for now
+                //TODO write a game over signal and functionality
+
+                emit player->level_over();
+            }
+
+            else if (past_self->fadeTrigger == 1 && tileType != 7){// Emit untrigger signal
+
                 past_self->fadeTrigger = 0;
 
                 emit tilePointers[thisLevel->fadeTriggerPosY][thisLevel->fadeTriggerPosX]->fadeTileUntrigger();
             }
-
-            qDebug() << past_self->fadeTrigger << " " << tileType;
-
         }
-
     }
 }

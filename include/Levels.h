@@ -33,10 +33,6 @@ struct Level1{
     int playerStartPosX = 0;
     int playerStartPosY = 1;
 
-    //Trigger tile position
-    int triggerPosX = 1;
-    int triggerPosY = 3;
-
     //Movable tile start position
     int moveStartPosX = 1;
     int moveStartPosY = 4;

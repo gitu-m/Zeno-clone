@@ -1,7 +1,10 @@
 #include <QBrush>
 #include <chrono>
 #include <QDebug>
+#include <QThread>
+#include <typeinfo>
 
+#include "Player.h"
 #include "Tile.h"
 #include "Game.h"
 
@@ -35,13 +38,37 @@ void Tile::renderTile(){
 
 void Tile::moveTile(){
 
-//    qDebug() << this->posX << " " << this->posY ;
+	qDebug() << posX <<" " <<posY;
+	qDebug() << game->brd->board[posX][posY];
 
-    while(this->posX < game->brd->thisLevel->moveEndPosX){
-
-		this->posX++;
-		this->setPos(x()+40,y());
+	if(this->isTriggered){
+		setPos(x()-80,y());
+		game->brd->board[posX][posY] = 5;
 	}
+	
+	else{
+		game->brd->board[posX][posY] = 0;
+		//Check is player is colliding with another object
+		QList<QGraphicsItem *> colliding_items = collidingItems();
+
+		//Iterating through the list of colliding objects to take an appropriate measure
+		for (int i = 0; i < colliding_items.size(); i++){
+			//If the colliding object is a tesseract
+			if (typeid(*colliding_items[i]) == typeid(Player)){
+				//Changing the players position
+				game->brd->player->isWaiting = true;
+
+				game->brd->player->posX += 2;
+				game->brd->player->setPos(game->brd->player->posX*40,game->brd->player->posY*40);
+
+				game->brd->player->isWaiting = false;
+			}
+		}
+
+		setPos(x()+80,y());
+	}
+
+	this->isTriggered = !(this->isTriggered);
 }
 
 void Tile::fadeTile(){

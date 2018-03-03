@@ -46,15 +46,17 @@ void Clone::start_moving(){
                 if (posX-1 >= 0 && game->brd->board[posY][posX-1] && game->brd->board[posY][posX-1] != 8){
 
                     qDebug() << "Left" << '\n';
-                    posX--;                
+
+                    posX--;
                 }
             }
 
             else if (player_events[i].key->key() == Qt::Key_Right){
 
-                if (posX+1 >= 0 && game->brd->board[posY][posX+1] && game->brd->board[posY][posX+1] != 8){
+                if (posX+1 < game->brd->l && game->brd->board[posY][posX+1] && game->brd->board[posY][posX+1] != 8){
 
                     qDebug() << "Right" << '\n';
+
                     posX++;
                 }
             }
@@ -64,15 +66,17 @@ void Clone::start_moving(){
                 if (posY-1 >= 0 && game->brd->board[posY-1][posX] && game->brd->board[posY-1][posX] != 8){
 
                     qDebug() << "Up" << '\n';
+
                     posY--;
                 }
             }
 
             else if (player_events[i].key->key() == Qt::Key_Down){
 
-                if (posY+1 >= 0 && game->brd->board[posY+1][posX] && game->brd->board[posY+1][posX] != 8){
+                if (posY+1 < game->brd->b && game->brd->board[posY+1][posX] && game->brd->board[posY+1][posX] != 8){
 
                     qDebug() << "Down" << '\n';
+
                     posY++;
                 }
             }
