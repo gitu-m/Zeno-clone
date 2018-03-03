@@ -18,7 +18,9 @@ class Board: public QObject{
 public:
     int l, b;
     int **board;
+    int initposX,initposY;
 
+    Level1 *thisLevel;
     Player *player;
     Clone *past_self;
     Tile ***tilePointers;

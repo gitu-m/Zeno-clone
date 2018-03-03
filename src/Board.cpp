@@ -26,7 +26,7 @@
 
 Board::Board(QGraphicsScene * scene){
     //Creating a struct of type Level1
-    Level1 *thisLevel = new Level1();
+    thisLevel = new Level1();
 
     //Setting the board dimensions
     l = 5;
@@ -35,10 +35,9 @@ Board::Board(QGraphicsScene * scene){
     //Setting the board's scene to be the current scene
     this->scene = scene;
 
-    //Setting the appropriate start postion for the top right corner
-    //to get the padding appropriately
-    int initposX = (11-l)*20;
-    int initposY = (11-b)*20;
+    //Setting the appropriate start postion for the top right corner to get the padding appropriately
+    initposX = (11-l)*20;
+    initposY = (11-b)*20;
 
     //Dynamically allocate board and tilePointers
     board = new int*[l];
@@ -58,49 +57,40 @@ Board::Board(QGraphicsScene * scene){
 
     for (int i = 0; i < l; ++i) {
         for (int j = 0; j < b; ++j) {
-            //Checking if an object exists at the current co-ordinates
+            //Checking if a tile object exists at the current co-ordinates
             if (board[j][i] != 0) {
+                //Creating a tile object and associating it with the appropriate positional pointer
                 tilePointers[j][i] = new Tile(board[j][i],j,i);
                 tilePointers[j][i]->setPos(initposX + i*40,initposY + j*40);
-                scene->addItem(tilePointers[j][i]); 
 
+                //Adding the tile to the current scene
+                scene->addItem(tilePointers[j][i]);
+
+                //Spawning a tesseract
                 if (board[j][i] == 6){
                     Tesseract * tess = new Tesseract();
                     tess->setPos(initposX + i*40 + 12 ,initposY + 12 + j*40);
                     scene->addItem(tess);
                 }
-
-                board[j][i] = 1;
             }
         }
     }
 
-    player = new Player();
+    //Creating a new player object
+    player = new Player(initposX,initposY,thisLevel->playerStartPosX,thisLevel->playerStartPosY,scene);
 
-    player->time_spawned = std::chrono::steady_clock::now();
-
-    player->setRect(initposX + 12, initposY + 12,16,16);
-    player->posX = thisLevel->playerStartPosX;
-    player->posY = thisLevel->playerStartPosY;
-    player->setPos(player->posX*40, player->posY*40);
-
-    player->setFlag(QGraphicsItem::ItemIsFocusable);
-    player->setFocus();
-    scene->addItem(player);
-
+    //Connecting the clone signal emitted by the player object to the make clone slot
     connect(player, SIGNAL(clone(QGraphicsScene *, std::vector <Event>)), this, SLOT(make_clone(QGraphicsScene *, const std::vector <Event>)));
 }
 
 void Board::make_clone(QGraphicsScene * scene, const std::vector<Event> player_events){
-    qDebug() << "Clone created";
-
     past_self = new Clone(player_events, scene);
 
     //Connecting the start clone signal to start moving slot
     connect(this,SIGNAL(startClone()),past_self, SLOT(start_moving()));
 
-    //Connecting the make move signal to change clone pos slot to move the clone
-    connect(past_self, &Clone::makeMov , this, &Board::changeClonePos);
+    //Connecting the make move signal to get the clone moving
+    connect(past_self, &Clone::makeMove,this,&Board::changeClonePos);
 
     //Connecting the clone done signal to quit signal of the thread
     connect(past_self, SIGNAL(cloneDone()), &cloneThread, SLOT(quit()));
@@ -116,7 +106,7 @@ void Board::make_clone(QGraphicsScene * scene, const std::vector<Event> player_e
 }
 
 void Board::changeClonePos(int X, int Y){
-    //Setting the clone's position to (X,Y)
+    //Changing the posiyion of the clone
     past_self->setPos(X, Y);
 
     //Checking if there are any items colliding with the clone
@@ -124,25 +114,15 @@ void Board::changeClonePos(int X, int Y){
 
     //Iterating through the list to take an appropriate action
     for (int i = 0 ;i < colliding_items.size();i++){
+        //If the current object is a tile
         if (typeid(*colliding_items[i]) == typeid(Tile)){
-            int checkVal = qgraphicsitem_cast<Tile *> (colliding_items[i]) -> type;
-            qDebug() <<checkVal;
-            if (checkVal > 200 && checkVal < 400){
-                // emit moveTile()
-                    qDebug() <<checkVal*1;
-                if (checkVal%10 != 0)
-                {
-                    qDebug() << X/40+checkVal%10<< " " << Y/40;
-                    emit tilePointers[Y/40][X/40+checkVal%10]->makeMovsignal();
-                }
-                else
-                {
+            //Storing the type of tile in the tileType variable
+            int tileType = qgraphicsitem_cast<Tile *> (colliding_items[i])->type;
 
-                    // qDebug()  << X/40 << " " << Y/40+(checkVal/10)%10 ;
-                    qDebug()  << X/40 << " " << Y/40+(checkVal/10)%10 <<tilePointers[Y/40+(checkVal/10)%10][X/40]->type;
-
-                    emit tilePointers[Y/40+(checkVal/10)%10][X/40]->makeMovsignal();
-                }
+            //If the tile is a trigger
+            if (tileType == 4){
+                //Triggering the movable tile
+                tilePointers[thisLevel->moveStartPosX][thisLevel->moveStartPosY]->moveTile();
             }
         }
     }

@@ -8,19 +8,18 @@
 class Tile:public QObject, public QGraphicsPixmapItem{
 	Q_OBJECT
 public:
+	//In general for every tile
     int type;
     int posX,posY;
 
+	//Common constructor
 	Tile(int type,int posX,int posY);
 
+	//Common method to render the tile
     void renderTile();
 
-public slots:
-	void makeMov();
-	void move();
-
-signals:
-	void makeMovsignal();
+	//Method to move tile
+	void moveTile();
 };
 
 #endif

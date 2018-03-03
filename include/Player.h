@@ -12,16 +12,18 @@ class Player: public QObject, public QGraphicsRectItem{
 
     Q_OBJECT
 public:
-
-    void keyPressEvent(QKeyEvent * event);
     int posX, posY;
+
+    std::vector <Event> event_queue; 
     std::chrono::steady_clock::time_point time_spawned;
 
-    std::vector <Event> event_queue; // To store all the events the player goes through
+    Player(int initposX,int initposY,int playerStartPosX,int playerStartPosY,QGraphicsScene *scene);
+
+    void keyPressEvent(QKeyEvent * event);
 
 signals:
     void level_over();
     void clone(QGraphicsScene *, std::vector <Event>);
 };
 
-#endif 
+#endif
