@@ -1,6 +1,7 @@
 #include <QMediaPlaylist>
 #include <QMediaPlayer>
 #include <QDebug>
+#include <QGraphicsPixmapItem>
 
 #include "Game.h"
 #include "Player.h"
@@ -54,29 +55,64 @@ void Game::Start(){
     connect(brd->player, SIGNAL(level_over()),this,SLOT(Start()));
 }
 
-void Game::displayMenu(){
-    //Setting the title string for the game
-    QGraphicsTextItem* titleText = new QGraphicsTextItem(QString("Zeno"));
-    QFont titleFont("Times",50);
-    titleText->setFont(titleFont);
+void Game::showText(QString foo,int size,int pos){
+    QGraphicsTextItem* fooText = new QGraphicsTextItem(foo);
+    QFont fooFont("Times",size);
+    fooText->setFont(fooFont);
 
     //Setting the co-ordinates for the title string in the current scene
-    int txPos = this->width()/2 - titleText->boundingRect().width()/2;
-    int tyPos = 150;
-    titleText->setPos(txPos,tyPos);
-    scene->addItem(titleText);
+    int fxPos = this->width()/2 - fooText->boundingRect().width()/2;
+    int fyPos = pos;
+    fooText->setPos(fxPos,fyPos);
+    scene->addItem(fooText);
+}
+
+void Game::Close(){
+    //Clearing the scene before quitting
+    scene->clear();
+
+    //Setting the final string for the game
+    showText(QString("Thanks for playing!!"),40,100);
+
+    //Our names :)
+    showText(QString("Creators : "),25,200);
+    showText(QString("gitu-m : Gitanjali"),20,250);
+    showText(QString("BhanuTabeti : Bhanu"),20,290);
+    showText(QString("sKAR04 : Sreekar"),20,330);
+}
+
+void Game::displayMenu(){
+    //Setting the background for menu
+    QGraphicsPixmapItem *foobar = new QGraphicsPixmapItem();
+    foobar->setPixmap(QPixmap("./resources/Backgrounds/menu.png"));
+    scene->addItem(foobar);
+
+    //Setting the title string for the game
+    showText(QString("Zeno"),50,100);
 
     //Setting the text in the start button
     Button* playButton = new Button(QString("Play"));
 
     //Setting the co-ordinates for the play button in the current scene
     int bxPos = this->width()/2 - playButton->boundingRect().width()/2;
-    int byPos = 275;
+    int byPos = 200;
     playButton->setPos(bxPos,byPos);
     scene->addItem(playButton);
 
     //Connecting the signal clicked to start the first level upon clicking
     connect(playButton,SIGNAL(clicked()),this,SLOT(Start()));
+
+    //Setting the text in the start button
+    Button* rulesButton = new Button(QString("Rules"));
+
+    //Setting the co-ordinates for the rules button in the current scene
+    int rxPos = this->width()/2 - rulesButton->boundingRect().width()/2;
+    int ryPos = 275;
+    rulesButton->setPos(rxPos,ryPos);
+    scene->addItem(rulesButton);
+
+    //Connecting the signal clicked to start the first level upon clicking
+    //connect(rulesButton,SIGNAL(clicked()),this,SLOT(Rules()));
 
     //Setting the text in the quit button
     Button* quitButton = new Button(QString("Quit"));
@@ -88,5 +124,5 @@ void Game::displayMenu(){
     scene->addItem(quitButton);
 
     //Connecting the signal clicked to quit the game upon clicking
-    connect(quitButton,SIGNAL(clicked()),this,SLOT(close()));
+    connect(quitButton,SIGNAL(clicked()),this,SLOT(Close()));
 }

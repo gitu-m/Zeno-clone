@@ -23,10 +23,13 @@ public:
 
     Game();
 
+	void showText(QString,int,int);
 	void displayMenu();
 
 public slots:
 	void Start();
+	void Close();
+	
 };
 
 #endif
