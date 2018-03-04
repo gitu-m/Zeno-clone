@@ -6,11 +6,13 @@
 #include <QGraphicsScene>
 #include <chrono>
 #include <vector>
+#include <mutex>
 
 #include "Event.h"
 
 class Clone: public QObject, public QGraphicsRectItem{
     Q_OBJECT
+
 
 public:
     int posX, posY;
@@ -19,6 +21,7 @@ public:
 
     int fadeTrigger = 0;
 
+    std::mutex cloneMutex;
     std::vector<Event> player_events;
     std::chrono::steady_clock::time_point time_spawned;
 
@@ -31,7 +34,7 @@ signals:
     void makeMove(int , int );
     void cloneDone();
 
-public slots:
+public:
 
     void start_moving();
 

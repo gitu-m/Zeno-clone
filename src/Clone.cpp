@@ -4,6 +4,7 @@
 #include <QList>
 #include <QtConcurrent>
 #include <QDebug>
+#include <thread>
 #include <typeinfo>
 
 #include "Event.h"
@@ -29,15 +30,14 @@ Clone::Clone(const std::vector<Event> player_events, QGraphicsScene *scene){
 
 void Clone::start_moving(){
 
-    qDebug() << "lol";
-    run = 1;
+    qDebug() << "lol start";
 
     int i=0;
 
 
     time_spawned = std::chrono::steady_clock::now();
 
-    while(i < player_events.size() && run){
+    while(run && i < player_events.size()){
 
         if (std::chrono::steady_clock::now() - time_spawned >= player_events[i].key_time){
 
@@ -90,7 +90,8 @@ void Clone::start_moving(){
     }
 
     //Make clone invisble
-    this->setRect(0,0,0,0);
+//    if(run) this->setRect(0,0,0,0);
 
-    emit cloneDone();
+//    emit cloneDone();
+
 }

@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <QtCore>
 #include <QDebug>
+#include <thread>
 
 #include "Tile.h"
 #include "Player.h"
@@ -14,7 +15,7 @@
 class Board: public QObject{
     Q_OBJECT
 
-    QThread cloneThread;
+    std::thread cloneThread;
 
 public:
     int l, b;
