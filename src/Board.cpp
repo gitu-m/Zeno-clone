@@ -124,18 +124,27 @@ Board::Board(QGraphicsScene * scene,int curLevel){
 
     //Connecting the clone signal emitted by the player object to the make clone slot
     connect(player, SIGNAL(clone(QGraphicsScene *, std::vector <Event>)), this, SLOT(make_clone(QGraphicsScene *, const std::vector <Event>)));
-
-
 }
 
 Board::~Board(){
 
+    if (cloneSpawned){
 
-    past_self->run = 0;
-//    cloneThread.~thread();
-    cloneThread.detach();
-    qDebug() << "lol";
-    delete this;
+        past_self->run = 0;
+
+//        while(!past_self->cloneStop);
+
+        qDebug() << "clone exited";
+
+        cloneThread.join();
+        cloneThread.~thread(); // Delete the thread
+
+    }
+
+//    while(!past_self->cloneStop); // wait for clone to finish
+
+//    cloneThread.detach();
+//    delete this;
 //    delete past_self;
 }
 
@@ -143,9 +152,11 @@ void Board::make_clone(QGraphicsScene * scene, const std::vector<Event> player_e
     qDebug()<< "MAke clone";
     past_self = new Clone(player_events, scene,thisLevel->playerStartPosX,thisLevel->playerStartPosY);
 
-    past_self->cloneMutex.lock();
+//    past_self->cloneMutex.lock();
     past_self->run = 1;
-    past_self->cloneMutex.unlock();
+//    past_self->cloneMutex.unlock();
+
+    cloneSpawned = 1;
 
     //Connecting the make move signal to get the clone moving
     connect(past_self, &Clone::makeMove,this,&Board::changeClonePos);
@@ -158,8 +169,6 @@ void Board::make_clone(QGraphicsScene * scene, const std::vector<Event> player_e
 void Board::changeClonePos(int X, int Y){
     //Changing the posiyion of the clone
     past_self->setPos(X, Y);
-
-    qDebug() << "lol";
 
     //Check is player is colliding with another object
     QList<QGraphicsItem *> colliding_items = past_self->collidingItems();

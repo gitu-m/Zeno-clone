@@ -20,6 +20,7 @@ public:
     int run = 1;
 
     int fadeTrigger = 0;
+    int cloneStop = 0;
 
     std::mutex cloneMutex;
     std::vector<Event> player_events;

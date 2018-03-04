@@ -39,7 +39,7 @@ void Clone::start_moving(){
 
     while(run && i < player_events.size()){
 
-        if (std::chrono::steady_clock::now() - time_spawned >= player_events[i].key_time){
+        if (run && std::chrono::steady_clock::now() - time_spawned >= player_events[i].key_time){
 
             if (player_events[i].key->key() == Qt::Key_Left){
 
@@ -93,5 +93,8 @@ void Clone::start_moving(){
 //    if(run) this->setRect(0,0,0,0);
 
 //    emit cloneDone();
+
+    cloneStop = 1;
+    qDebug() << "done !";
 
 }

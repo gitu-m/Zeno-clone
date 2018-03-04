@@ -22,6 +22,7 @@ public:
     int **board;
     int initposX,initposY;
     int curLevel;
+    int cloneSpawned = 0;
 
     Level *thisLevel;
     Player *player;

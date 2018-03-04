@@ -123,6 +123,12 @@ void gen(){
     		qDebug() << i << " " << j << " " << level2fading[j][i];
     	}
     }
+
+    LevelData[2].moveStartPosX = 2;
+    LevelData[2].moveStartPosY = 3;
+    LevelData[2].moveEndPosX   = 2;
+    LevelData[2].moveEndPosY   = 1;
+
     LevelData[2].playerStartPosX = 5;
     LevelData[2].playerStartPosY = 4;
 

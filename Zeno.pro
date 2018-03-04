@@ -29,6 +29,8 @@ SOURCES += 	main.cpp \
 
 CONFIG += c++11
 
+QMAKE_CXXFLAGS += -g
+
 QT += core gui widgets concurrent\
 	multimedia
 

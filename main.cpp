@@ -11,5 +11,10 @@ int main(int argc, char *argv[]){
     game = new Game();
     game->show();
 
-    return newGame->exec();
+    int ret = newGame->exec();
+
+    delete game;
+    delete newGame;
+
+    return ret;
 }

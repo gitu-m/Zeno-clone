@@ -27,12 +27,15 @@ Player::Player(int initposX,int initposY,int playerStartPosX,int playerStartPosY
     this->setFocus();
     scene->addItem(this);
 
+    qDebug() << "debug player";
+
     time_spawned = std::chrono::steady_clock::now();
 }
 
 void Player::keyPressEvent(QKeyEvent *event){
     //Check if the player is waiting
-    // while(isWaiting);
+     while(isWaiting);
+
 
     //Creating a new event to store the information of the current input
     Event *key_pressed =  new Event();

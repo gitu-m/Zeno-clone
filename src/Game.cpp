@@ -54,30 +54,32 @@ void Game::Start(){
     qDebug() << "start";
 	scene->clear();
 
-    if (Level == 3)
-    {
+    if (Level) delete brd;
+
+    Level++;
+
+    if (Level == 4){
+
         this->Close();
+
     }
-    qDebug() << "start";
 
     QGraphicsPixmapItem *foobar = new QGraphicsPixmapItem();
 
     switch(Level){
+        qDebug() << "start";
         case 1: foobar->setPixmap(QPixmap("./resources/Backgrounds/level1.png")); break;
         case 2: foobar->setPixmap(QPixmap("./resources/Backgrounds/level2.png")); break;
         case 3: foobar->setPixmap(QPixmap("./resources/Backgrounds/level3.png")); break;
     }
 
-
     scene->addItem(foobar);
 
-    // if (Level) delete brd;
-
     //Setup Board for the current level
-    brd = new Board(scene,Level);
+    brd = new Board(scene,Level-1);
 
     // Increase Level for Next Call
-    Level++;
+//    Level++;
 
     //Connecting the level over signal emitted by the player to the start slot to render the new level
     connect(brd->player, SIGNAL(level_over()),this,SLOT(Start()));
