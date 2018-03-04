@@ -37,24 +37,6 @@ Game::Game(){
     displayMenu();
 }
 
-void Game::Start(){
-
-	scene->clear();
-
-    qDebug() << "start";
-
-    if (Level != 0) delete brd;
-
-    //Setup Board for the current level
-    brd = new Board(scene);
-
-    // Increase Level for Next Call
-    Level++;
-
-    //Connecting the level over signal emitted by the player to the start slot to render the new level
-    connect(brd->player, SIGNAL(level_over()),this,SLOT(Start()));
-}
-
 void Game::showText(QString foo,int size,int pos){
     QGraphicsTextItem* fooText = new QGraphicsTextItem(foo);
     QFont fooFont("Times",size);
@@ -67,9 +49,134 @@ void Game::showText(QString foo,int size,int pos){
     scene->addItem(fooText);
 }
 
+void Game::Start(){
+
+	scene->clear();
+
+    qDebug() << "start";
+
+    QGraphicsPixmapItem *foobar = new QGraphicsPixmapItem();
+
+    switch(Level){
+        case 1: foobar->setPixmap(QPixmap("./resources/Backgrounds/level1.png")); break;
+        case 2: foobar->setPixmap(QPixmap("./resources/Backgrounds/level2.png")); break;
+        case 3: foobar->setPixmap(QPixmap("./resources/Backgrounds/level3.png")); break;
+    }
+
+    scene->addItem(foobar);
+
+    if (Level) delete brd;
+
+    //Setup Board for the current level
+    brd = new Board(scene);
+
+    // Increase Level for Next Call
+    Level++;
+
+    //Connecting the level over signal emitted by the player to the start slot to render the new level
+    connect(brd->player, SIGNAL(level_over()),this,SLOT(Start()));
+}
+
+int ruleNum = 0;
+
+void Game::Rules(){
+    //Clearing the scene before showing rules
+    scene->clear();
+
+    //Setting the background for the rules screen
+    QGraphicsPixmapItem *foo = new QGraphicsPixmapItem();
+    foo->setPixmap(QPixmap("./resources/Backgrounds/rules.png"));
+    scene->addItem(foo);
+
+    //Setting the text in the next button
+    Button* nextButton = new Button(QString("Next"));
+
+    //Setting the co-ordinates for the play button in the current scene
+    int nxPos = this->width()/2 - nextButton->boundingRect().width()/2;
+    int nyPos = 300;
+    nextButton->setPos(nxPos,nyPos);
+    scene->addItem(nextButton);
+
+    switch(ruleNum){
+        case 0:{
+            showText(QString("Rule 1:"),40,100);
+            showText(QString("The square outline represents the player."),20,150);
+
+            //Connecting the signal clicked to next rule upon clicking
+            connect(nextButton,SIGNAL(clicked()),this,SLOT(Rules()));
+
+            ++ruleNum;
+
+            break;
+        }
+        case 1:{
+            showText(QString("Rule 2:"),40,100);
+            showText(QString("The bold square represents a tesseract."),20,150);
+
+            //Connecting the signal clicked to next rule upon clicking
+            connect(nextButton,SIGNAL(clicked()),this,SLOT(Rules()));
+
+            ++ruleNum;
+
+            break;
+        }
+        case 2:{
+            showText(QString("Rule 3:"),40,100);
+            showText(QString("Stepping on a tessseract spawns a new clone of yourself."),20,150);
+            showText(QString("It also resets the board."),20,180);
+
+            //Connecting the signal clicked to next rule upon clicking
+            connect(nextButton,SIGNAL(clicked()),this,SLOT(Rules()));
+
+            ++ruleNum;
+
+            break;
+        }
+        case 3:{
+            showText(QString("Rule 4:"),40,100);
+            showText(QString("Clone follows the actions that you did before spawning it."),20,150);
+
+            //Connecting the signal clicked to next rule upon clicking
+            connect(nextButton,SIGNAL(clicked()),this,SLOT(Rules()));
+
+            ++ruleNum;
+
+            break;
+        }
+        case 4:{
+            showText(QString("Rule 5:"),40,100);
+            showText(QString("A moving tile can move by stepping on it's trigger"),20,150);
+            showText(QString("A moving tile can be triggered only once."),20,180);
+
+            //Connecting the signal clicked to next rule upon clicking
+            connect(nextButton,SIGNAL(clicked()),this,SLOT(Rules()));
+
+            ++ruleNum;
+
+            break;
+        }
+        case 5:{
+            showText(QString("Rule 6:"),40,100);
+            showText(QString("A fading tile activates only by stepping on it's trigger."),20,150);
+
+            //Connecting the signal clicked to show menu upon clicking
+            connect(nextButton,SIGNAL(clicked()),this,SLOT(displayMenuSlot()));
+
+            ruleNum = 0;
+
+            break;
+        }
+    }
+}
+
 void Game::Close(){
     //Clearing the scene before quitting
     scene->clear();
+
+    //Setting the background for the exit screen
+    QGraphicsPixmapItem *foo = new QGraphicsPixmapItem();
+    foo->setPixmap(QPixmap("./resources/Backgrounds/exit.png"));
+    scene->addItem(foo);
 
     //Setting the final string for the game
     showText(QString("Thanks for playing!!"),40,100);
@@ -81,7 +188,14 @@ void Game::Close(){
     showText(QString("sKAR04 : Sreekar"),20,330);
 }
 
+void Game::displayMenuSlot(){
+    displayMenu();
+}
+
 void Game::displayMenu(){
+    //Clearing the scene before showing menu
+    scene->clear();
+
     //Setting the background for menu
     QGraphicsPixmapItem *foobar = new QGraphicsPixmapItem();
     foobar->setPixmap(QPixmap("./resources/Backgrounds/menu.png"));
@@ -112,7 +226,7 @@ void Game::displayMenu(){
     scene->addItem(rulesButton);
 
     //Connecting the signal clicked to start the first level upon clicking
-    //connect(rulesButton,SIGNAL(clicked()),this,SLOT(Rules()));
+    connect(rulesButton,SIGNAL(clicked()),this,SLOT(Rules()));
 
     //Setting the text in the quit button
     Button* quitButton = new Button(QString("Quit"));

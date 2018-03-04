@@ -28,8 +28,11 @@ public:
 
 public slots:
 	void Start();
+	void Rules();
 	void Close();
-	
+
+	void displayMenuSlot();
+
 };
 
 #endif
