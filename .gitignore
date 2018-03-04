@@ -37,4 +37,6 @@ Zeno
 Makefile
 *.pro.user
 
+qrc_res.cpp
+.qmake.stash
 
