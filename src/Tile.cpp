@@ -16,8 +16,6 @@ Tile::Tile(int type,int posX,int posY){
 	this->posX = posX;
 	this->posY = posY;
 
-//    qDebug() << type << " " << posX << " " << posY;
-
 	//Rendering the appropriate image based on the tile's type
     renderTile();
 }
@@ -36,45 +34,19 @@ void Tile::renderTile(){
     }
 }
 
-void Tile::moveTile(){
+int flag = 0, xToMove,yToMove;
 
-	qDebug() << posX <<" " <<posY;
-	qDebug() << game->brd->board[posX][posY];
-
-	if(this->isTriggered){
-		setPos(x()-80,y());
-		game->brd->board[posX][posY] = 5;
-	}
-	
-	else{
-		game->brd->board[posX][posY] = 0;
-		//Check is player is colliding with another object
-		QList<QGraphicsItem *> colliding_items = collidingItems();
-
-		//Iterating through the list of colliding objects to take an appropriate measure
-		for (int i = 0; i < colliding_items.size(); i++){
-			//If the colliding object is a tesseract
-			if (typeid(*colliding_items[i]) == typeid(Player)){
-				//Changing the players position
-				game->brd->player->isWaiting = true;
-
-				game->brd->player->posX += 2;
-				game->brd->player->setPos(game->brd->player->posX*40,game->brd->player->posY*40);
-
-				game->brd->player->isWaiting = false;
-			}
-		}
-
-		setPos(x()+80,y());
-	}
-
+void Tile::resetTile(){
+	game->brd->board[posY][posX] = 5;
+	game->brd->board[posX + (MovEndX-MovStartX)/40][posY + (MovStartY-MovEndY)/40] = 0;
+	setPos(game->brd->initposX+posX*40,game->brd->initposX + posY*40);
 	this->isTriggered = !(this->isTriggered);
+
 }
 
 void Tile::fadeTile(){
 
      if (this->type == 8){
-
          this->type = 9;
          game->brd->board[this->posY][this->posX] = 9;
          this->renderTile();
@@ -93,3 +65,62 @@ void Tile::unfadeTile(){
 
 }
 
+
+void Tile::moveTile(){
+	this->isTriggered = !(this->isTriggered);
+
+	qDebug() <<x()<<y()<<"Called";
+	qDebug() <<game->brd->player->posX ;
+	flag = 0;
+	if (game->brd->player->posX == posX && game->brd->player->posY == posY){
+		flag = 1;
+		game->brd->player->posX = MovEndX;
+		game->brd->player->posY = MovEndY;
+	}
+
+	xToMove = (MovEndX-MovStartX)*40;
+	yToMove = (MovEndY-MovStartY)*40;
+
+	game->brd->board[posY][posX] = 0;
+	game->brd->board[posX + xToMove/40][posY + yToMove/40] = 1;
+
+	QTimer * timer = new QTimer(this);
+    connect(timer,SIGNAL(timeout()),this,SLOT(move()));
+	timer->start(10);
+
+}
+
+void Tile::move(){
+	if (xToMove != 0){
+		if (xToMove > 0)
+{
+			xToMove -= 1;
+			setPos(x()+1,y());
+			if(flag)
+				game->brd->player->setPos(game->brd->player->x()+1,game->brd->player->y());
+		}
+		else
+{
+			xToMove += 1;
+			setPos(x()-1,y());
+			if(flag)
+				game->brd->player->setPos(game->brd->player->x()-1,game->brd->player->y());
+		}
+	}
+	if (yToMove != 0){
+		if (yToMove > 0 )
+{
+			yToMove -= 1;
+			setPos(x(),y()+1);
+			if(flag)
+				game->brd->player->setPos(game->brd->player->x(),game->brd->player->y()+1);
+		}
+		else
+{
+			yToMove += 1;
+			setPos(x(),y()-1);
+			if(flag)
+				game->brd->player->setPos(game->brd->player->x(),game->brd->player->y()-1);
+		}
+	}
+}

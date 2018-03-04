@@ -15,41 +15,35 @@
 *   9   - Fade Tile in focus
 */
 
-struct Level1{
-    //Level Layout
-/*    int level1Board[5][5] = {{1,0,0,0,0},
-                             {2,7,0,0,3},
-                             {0,1,0,0,8},
-                             {6,4,0,0,8},
-                             {1,2,0,0,1}}*/;
+class Level{
+public:
+    // Level();
+    int **levelBoard;
 
-    int level1Board[5][5] = {{1,0,0,0,0},
-                             {2,1,0,0,3},
-                             {0,1,0,0,8},
-                             {6,1,0,0,8},
-                             {7,1,1,1,1}};
-
+    // BoardDimensions
+    int length = 0;
+    int breath = 0;
     //Player start position
     int playerStartPosX = 0;
-    int playerStartPosY = 1;
+    int playerStartPosY = 0;
 
     //Movable tile start position
-    int moveStartPosX = 1;
-    int moveStartPosY = 4;
+    int moveStartPosX = 0;
+    int moveStartPosY = 0;
 
     //Movable tile end position
-    int moveEndPosX = 3;
-    int moveEndPosY = 4;
+    int moveEndPosX = 0;
+    int moveEndPosY = 0;
 
     //Fade tile trigger
     int fadeTriggerPosX = 0;
-    int fadeTriggerPosY = 4;
+    int fadeTriggerPosY = 0;
 
     //Fade tile positions
-    int fadeTileCount = 2;
-    int fadeTiles[2][2] = {{4,2},
-                           {4,3}};
-
+    int fadeTileCount = 0;
+    int **fadeTiles;
 };
+
+
 
 #endif

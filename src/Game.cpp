@@ -51,8 +51,13 @@ void Game::showText(QString foo,int size,int pos){
 
 void Game::Start(){
 
+    qDebug() << "start";
 	scene->clear();
 
+    if (Level == 3)
+    {
+        this->Close();
+    }
     qDebug() << "start";
 
     QGraphicsPixmapItem *foobar = new QGraphicsPixmapItem();
@@ -63,12 +68,13 @@ void Game::Start(){
         case 3: foobar->setPixmap(QPixmap("./resources/Backgrounds/level3.png")); break;
     }
 
+
     scene->addItem(foobar);
 
-    if (Level) delete brd;
+    // if (Level) delete brd;
 
     //Setup Board for the current level
-    brd = new Board(scene);
+    brd = new Board(scene,Level);
 
     // Increase Level for Next Call
     Level++;

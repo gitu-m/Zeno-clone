@@ -32,7 +32,7 @@ Player::Player(int initposX,int initposY,int playerStartPosX,int playerStartPosY
 
 void Player::keyPressEvent(QKeyEvent *event){
     //Check if the player is waiting
-    while(isWaiting);
+    // while(isWaiting);
 
     //Creating a new event to store the information of the current input
     Event *key_pressed =  new Event();
@@ -77,7 +77,7 @@ void Player::keyPressEvent(QKeyEvent *event){
     //Setting the appropriate position of the player based on the input
     setPos(posX*40, posY*40);
 
-    qDebug() << game->brd->board[posY][posX];
+    // qDebug() << game->brd->board[posY][posX];
 
     //Check is player is colliding with another object
     QList<QGraphicsItem *> colliding_items = collidingItems();
@@ -88,18 +88,21 @@ void Player::keyPressEvent(QKeyEvent *event){
         if (typeid(*colliding_items[i]) == typeid(Tesseract)){
             //Remove the tesseract upon collision
             scene()->removeItem(colliding_items[i]);
-
+            qDebug() << "Okay";
             //Deleting the tesseract object
             delete colliding_items[i];
+            qDebug() << "Okay";
 
             if(game->brd->tilePointers[game->brd->thisLevel->moveStartPosY][game->brd->thisLevel->moveStartPosX]->isTriggered){
                 //Setting the position of the moving tile to default position
-                game->brd->tilePointers[game->brd->thisLevel->moveStartPosY][game->brd->thisLevel->moveStartPosX]->moveTile();
+                game->brd->tilePointers[game->brd->thisLevel->moveStartPosY][game->brd->thisLevel->moveStartPosX]->resetTile();
             }
 
+            qDebug() << "Okay";
             //Emitting the signal for clone generation
             emit clone(scene(), event_queue);
 
+            qDebug() << "Okay";
             if (fadeTrigger == 1){// Emit untrigger signal
 
                 fadeTrigger = 0;

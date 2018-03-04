@@ -27,7 +27,7 @@ public:
 
     QGraphicsScene * scene;
 
-    Clone(const std::vector<Event> player_events, QGraphicsScene * scene);
+    Clone(const std::vector<Event> player_events, QGraphicsScene * scene,int X, int Y);
 
 signals:
 

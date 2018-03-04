@@ -15,12 +15,12 @@
 
 extern Game *game;
 
-Clone::Clone(const std::vector<Event> player_events, QGraphicsScene *scene){
-    setRect(120+12,120+12,16,16);
+Clone::Clone(const std::vector<Event> player_events, QGraphicsScene *scene,int X,int Y){
+    setRect(game->brd->initposX+12,game->brd->initposY+12,16,16);
     scene->addItem(this);
 
-    posX = 0;
-    posY = 1;
+    posX = X;
+    posY = Y;
 
     setPos(posX*40,posY*40);
 
@@ -32,7 +32,7 @@ void Clone::start_moving(){
 
     qDebug() << "lol start";
 
-    int i=0;
+    uint i=0;
 
 
     time_spawned = std::chrono::steady_clock::now();

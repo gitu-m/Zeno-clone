@@ -15,6 +15,8 @@
 #include "Board.h"
 #include "Player.h"
 #include "Levels.h"
+#include "GenLeveLs.h"
+// #include "LevelsData.h"
 
 /*
 *   0   - No Tile
@@ -26,14 +28,17 @@
 *   6   - Tesseract
 */
 
-Board::Board(QGraphicsScene * scene){
+Board::Board(QGraphicsScene * scene,int curLevel){
     //Creating a struct of type Level1
-    thisLevel = new Level1();
+    gen();
+    qDebug() << curLevel;
+    this->curLevel = curLevel;
+    thisLevel = &LevelData[curLevel];
 
 
     //Setting the board dimensions
-    l = 5;
-    b = 5;
+    l = LevelData[curLevel].length;
+    b = LevelData[curLevel].breath;
 
     //Setting the board's scene to be the current scene
     this->scene = scene;
@@ -51,17 +56,15 @@ Board::Board(QGraphicsScene * scene){
 
         board[i] = new int[b];
         tilePointers[i] = new Tile*[b];
-
-        qDebug() << "bug " << i;
-
     }
 
+    // int levelBoard[][b] = *thisLevel->levelBoard;
 
     //Copying the state of the current level into this board
     for (int i = 0 ; i < l ; i++){
         for ( int j = 0 ; j < b ; j++){
 
-            board[i][j] = thisLevel->level1Board[i][j];
+            board[i][j] = thisLevel->levelBoard[i][j];
             //qDebug() << board[i][j];
         }
     }
@@ -86,6 +89,14 @@ Board::Board(QGraphicsScene * scene){
                        tess->setPos(initposX + 12 + i*40,initposY + j*40 + 12);
                        scene->addItem(tess);
                    }
+
+                   if (board[j][i] == 5)
+                   {
+                       tilePointers[j][i]->MovStartX = thisLevel->moveStartPosX ;
+                       tilePointers[j][i]->MovStartY = thisLevel->moveStartPosY ;
+                       tilePointers[j][i]->MovEndX   = thisLevel->moveEndPosX   ;
+                       tilePointers[j][i]->MovEndY   = thisLevel->moveEndPosY   ;
+                   }
                }
            }
        }
@@ -94,8 +105,8 @@ Board::Board(QGraphicsScene * scene){
     //Connect fade tile trigger signals
     for ( int i = 0 ; i < thisLevel->fadeTileCount ; i++){
 
-        int X = thisLevel->fadeTiles[i][0];
-        int Y = thisLevel->fadeTiles[i][1];
+        int X = thisLevel->fadeTiles[0][i];
+        int Y = thisLevel->fadeTiles[1][i];
 
         connect(tilePointers[thisLevel->fadeTriggerPosY][thisLevel->fadeTriggerPosX], SIGNAL(fadeTileTriggered()), tilePointers[Y][X], SLOT(fadeTile()));
         connect(tilePointers[thisLevel->fadeTriggerPosY][thisLevel->fadeTriggerPosX], SIGNAL(fadeTileUntrigger()), tilePointers[Y][X], SLOT(unfadeTile()));
@@ -104,9 +115,12 @@ Board::Board(QGraphicsScene * scene){
 
 //    connect(tilePointers[thisLevel->fadeTriggerPosY][thisLevel->fadeTriggerPosX], SIGNAL(fadeTileTriggered()), tilePointers[3][4], SLOT(fadeTile()));
 //    connect(tilePointers[thisLevel->fadeTriggerPosY][thisLevel->fadeTriggerPosX], SIGNAL(fadeTileUntrigger()), tilePointers[3][4], SLOT(unfadeTile()));
+    qDebug() << "Tiles Inizallized";
 
     //Creating a new player object
     player = new Player(initposX,initposY,thisLevel->playerStartPosX,thisLevel->playerStartPosY,scene);
+
+    qDebug() << "Player Inizallized";
 
     //Connecting the clone signal emitted by the player object to the make clone slot
     connect(player, SIGNAL(clone(QGraphicsScene *, std::vector <Event>)), this, SLOT(make_clone(QGraphicsScene *, const std::vector <Event>)));
@@ -121,12 +135,13 @@ Board::~Board(){
 //    cloneThread.~thread();
     cloneThread.detach();
     qDebug() << "lol";
+    delete this;
 //    delete past_self;
 }
 
 void Board::make_clone(QGraphicsScene * scene, const std::vector<Event> player_events){
-
-    past_self = new Clone(player_events, scene);
+    qDebug()<< "MAke clone";
+    past_self = new Clone(player_events, scene,thisLevel->playerStartPosX,thisLevel->playerStartPosY);
 
     past_self->cloneMutex.lock();
     past_self->run = 1;

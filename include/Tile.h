@@ -15,7 +15,7 @@ public:
 
 	//For moving tile
 	bool isTriggered = false;
-
+	
 	//Common constructor
 	Tile(int type,int posX,int posY);
 
@@ -24,6 +24,15 @@ public:
 
 	//Method to move tile
 	void moveTile();
+
+	void resetTile();
+
+	//For MovingTile
+	int MovStartX = 0;
+	int MovStartY = 0;
+
+	int MovEndX = 0;
+	int MovEndY = 0;
 
 signals:
     void fadeTileTriggered();
@@ -34,6 +43,7 @@ public slots:
     //Method to fade tile
     void fadeTile();
     void unfadeTile();
+    void move();
 
 };
 

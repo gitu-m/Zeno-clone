@@ -21,14 +21,15 @@ public:
     int l, b;
     int **board;
     int initposX,initposY;
+    int curLevel;
 
-    Level1 *thisLevel;
+    Level *thisLevel;
     Player *player;
     Clone *past_self;
     Tile ***tilePointers;
 	QGraphicsScene *scene;
 
-    Board(QGraphicsScene *scene);
+    Board(QGraphicsScene *scene,int curLevel);
     ~Board();
 
     void genBoard(QGraphicsScene *scene);
