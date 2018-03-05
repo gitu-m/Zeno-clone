@@ -9,40 +9,77 @@ class Tile : public QObject, public QGraphicsPixmapItem{
 	Q_OBJECT
 
 public:
-	//In general for every tile
+	/*!
+	* This attribute stores the appropriate type of the tile based on it's functionality.
+	*/
     int type;
+
+	/*!
+	* The co-ordinates to spawn a tile.
+	*/
     int posX,posY;
 
-	//For moving tile
+	/*!
+	* This variable checks if the current tile has been triggered.
+	*/
 	bool isTriggered = false;
-	
-	//Common constructor
+
+	/*!
+	* The constructor for the tile class.
+	* Parameters are self explanatory.
+	*/
 	Tile(int type,int posX,int posY);
 
-	//Common method to render the tile
+	/*!
+	* Method to render the tile on the screen.
+	*/
     void renderTile();
 
-	//Method to move tile
+	/*!
+	* Method to move the current tile.
+	*/
 	void moveTile();
 
+	/*!
+	* Method which resets the state of the tile.
+	*/
 	void resetTile();
 
-	//For MovingTile
+	/*!
+	* Starting co-ordinates of the current tile.
+	*/
 	int MovStartX = 0;
 	int MovStartY = 0;
 
+	/*!
+	* Ending co-ordinates of the current tile.
+	*/
 	int MovEndX = 0;
 	int MovEndY = 0;
 
 signals:
+	/*!
+	* This is set of the trigger for the fading tile.
+	*/
     void fadeTileTriggered();
+	/*!
+	* This is to reset the trigger for the fading tile.
+	*/
     void fadeTileUntrigger();
 
 public slots:
 
-    //Method to fade tile
+	/*!
+	* Method to apply the fading effect on a tile
+	*/
     void fadeTile();
+	/*!
+	* Method to reset a fading tile to it's initial state.
+	*/
     void unfadeTile();
+	/*!
+	* Method to simulate a moving tile .
+	*/
     void move();
 
 };

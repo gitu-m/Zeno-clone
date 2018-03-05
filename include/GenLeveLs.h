@@ -13,8 +13,14 @@
 *   9   - Fade Tile in focus
 */
 
+/*!
+* Stores the information about the levels.
+*/
 Level LevelData[5];
 
+/*!
+* The layout of the zeroth level.
+*/
 int level0Board[7][7] = {{1,1,1,1,1,1,2},
                          {1,0,0,0,0,0,0},
                          {1,0,1,1,1,1,1},
@@ -23,12 +29,18 @@ int level0Board[7][7] = {{1,1,1,1,1,1,2},
                          {1,0,0,0,0,0,1},
                          {1,1,1,1,1,1,1}};
 
+/*!
+* The layout of the first level.
+*/
 int level1Board[5][5] = {{3,1,1,1,0},
 						 {0,0,0,0,0},
 						 {0,0,0,0,2},
 						 {0,0,5,0,1},
 						 {6,1,1,1,4}};
 
+/*!
+* The layout of the second level.
+*/
 int level2Board[7][7] = {{0,0,0,0,0,0,0},
                          {0,0,0,0,1,1,1},
                          {1,1,1,1,0,1,1},
@@ -37,8 +49,14 @@ int level2Board[7][7] = {{0,0,0,0,0,0,0},
                          {0,0,0,0,6,1,7},
                          {0,0,0,0,0,0,0}};
 
+/*!
+* The positions of the faded tiles in level 2.
+*/
 int level2fading[3][2] = {{3,3},{4,3},{5,3}};
 
+/*!
+* This method is responisble for generating the level data.
+*/
 void gen(){
 
 	/*-----------------------------------------------------------------------------------*/

@@ -7,9 +7,10 @@
 class Tesseract: public QGraphicsRectItem{
 
 public:
-
+    /*!
+    * Constructor for the tesseract class.
+    */
     Tesseract();
-
 };
 
-#endif 
+#endif

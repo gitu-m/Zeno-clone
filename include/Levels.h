@@ -17,33 +17,64 @@
 
 class Level{
 public:
-    // Level();
+    /*!
+    * Stores the layout of the current level's board.
+    */
     int **levelBoard;
 
-    // BoardDimensions
+    /*!
+    * The length of the board.
+    */
     int length = 0;
+    /*!
+    * The breadth of the board.
+    */
     int breath = 0;
-    //Player start position
+
+    /*!
+    * Starting X co-ordinate of the player in the current level.
+    */
     int playerStartPosX = 0;
+    /*!
+    * Starting Y co-ordinate of the player in the current level.
+    */
     int playerStartPosY = 0;
 
-    //Movable tile start position
+    /*!
+    * X co-ordinate of the movable tile.
+    */
     int moveStartPosX = 0;
+    /*!
+    * Y co-ordinate of the starting tile.
+    */
     int moveStartPosY = 0;
 
-    //Movable tile end position
+    /*!
+    * Ending X co-ordinate of the moving tile.
+    */
     int moveEndPosX = 0;
+    /*!
+    * Ending Y co-ordinate of the moving tile.
+    */
     int moveEndPosY = 0;
 
-    //Fade tile trigger
+    /*!
+    * X co-ordinate of the trigger for the fading tile.
+    */
     int fadeTriggerPosX = 0;
+    /*!
+    * Y co-ordinate of the trigger for the fading tile.
+    */
     int fadeTriggerPosY = 0;
 
-    //Fade tile positions
+    /*!
+    * Number of fading tiles is stored in this attribute.
+    */
     int fadeTileCount = 0;
+    /*!
+    * Stores information about the positions of the fading tiles.
+    */
     int **fadeTiles;
 };
-
-
 
 #endif
