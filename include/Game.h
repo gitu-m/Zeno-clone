@@ -10,12 +10,16 @@
 #include "Player.h"
 #include "Board.h"
 
+
 class Game : public QGraphicsView{
 	Q_OBJECT
 
     QThread mthread;
 
 public:
+	/*!
+	 * An Integer variables which keeps track of current level.
+	 */
 	int Level;
 
 	QGraphicsScene *scene;

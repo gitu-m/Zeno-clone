@@ -35,6 +35,7 @@ Game::Game(){
 
     //Displaying the menu
     displayMenu();
+
 }
 
 void Game::showText(QString foo,int size,int pos){

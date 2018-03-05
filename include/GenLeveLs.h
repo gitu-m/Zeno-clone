@@ -110,18 +110,8 @@ void gen(){
 
     for (int i = 0 ; i < 2 ; i++){
         for ( int j = 0 ; j < 3 ; j++){
-
             LevelData[2].fadeTiles[i][j] = level2fading[j][i];
-        	qDebug() << i << " " << j << " " << LevelData[2].fadeTiles[i][j];
         }
-    }
-
-    for (int i = 0; i < 2; ++i)
-    {
-    	for (int j = 0; j < 3; ++j)
-    	{
-    		qDebug() << i << " " << j << " " << level2fading[j][i];
-    	}
     }
 
     LevelData[2].moveStartPosX = 2;
