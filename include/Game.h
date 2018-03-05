@@ -34,6 +34,16 @@ public:
 	*/
 	Board *brd;
 
+	//To-Do
+	QGraphicsRectItem* panel;
+	//To-Do
+	QGraphicsTextItem* leveldisplay;
+	//To-Do
+	QGraphicsTextItem* userNamedisplay;
+	//To-Do
+	QString userName = "User";
+
+
 	/*!
 	* Constructor for the game class.
 	*/
@@ -52,6 +62,12 @@ public:
 	*/
 	void displayMenu();
 
+	//To-Do
+	void drawPanel();
+
+	//To-Do
+	void getUserName();
+	
 public slots:
 	/*!
 	* This slot is responsible for starting the game.

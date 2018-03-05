@@ -2,6 +2,7 @@
 
 #define BOARD_H
 
+#include <QGraphicsProxyWidget>
 #include <QGraphicsScene>
 #include <QtCore>
 #include <QDebug>
@@ -11,6 +12,7 @@
 #include "Player.h"
 #include "Clone.h"
 #include "Levels.h"
+#include "DigitalClock.h"
 
 class Board: public QObject{
     Q_OBJECT
@@ -67,6 +69,12 @@ public:
     * The current scene in which the board is a part of.
     */
 	QGraphicsScene *scene;
+
+    //TO-DO
+    DigitalClock *clock;
+    
+    //TO-DO
+    QGraphicsProxyWidget * clockProxyWidget;
 
     /*!
     * The constructor for the board class.

@@ -2,6 +2,7 @@
 #include <QMediaPlayer>
 #include <QDebug>
 #include <QGraphicsPixmapItem>
+#include <QInputDialog>
 
 #include "Game.h"
 #include "Player.h"
@@ -9,7 +10,7 @@
 #include "Button.h"
 
 Game::Game(){
-	//Creating a scene to render the game
+    //Creating a scene to render the game
     scene = new QGraphicsScene();
 
     //Setting the dimensions of the current scene
@@ -31,7 +32,7 @@ Game::Game(){
     playlist->moveToThread(&mthread);
 
     //Setting the current level to 0
-	Level = 0;
+    Level = 0;
 
     //Displaying the menu
     displayMenu();
@@ -50,19 +51,60 @@ void Game::showText(QString foo,int size,int pos){
     scene->addItem(fooText);
 }
 
+void Game::drawPanel(){
+    // draws a panel at the specified location with the specified properties
+    panel = new QGraphicsRectItem(440,0,200,480);
+    QBrush brush;
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(Qt::darkGray);
+    panel->setBrush(brush);
+    panel->setOpacity(1);
+    scene->addItem(panel);
+
+    leveldisplay = new QGraphicsTextItem(QString("Level: ") + QString::number(Level));
+    leveldisplay->setDefaultTextColor(Qt::white);
+    leveldisplay->setFont(QFont("times",20));
+    leveldisplay->setPos(460,20);
+    scene->addItem(leveldisplay);
+
+    userNamedisplay = new QGraphicsTextItem(userName);
+    userNamedisplay->setDefaultTextColor(Qt::white);
+    userNamedisplay->setFont(QFont("times",20));
+    userNamedisplay->setPos(460,420);
+    scene->addItem(userNamedisplay);
+}
+
+void Game::getUserName(){
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("Enter UserName"),tr("User name:"), QLineEdit::Normal,QDir::home().dirName(), &ok);
+    if (ok && !text.isEmpty())
+        userName = text;
+}
+
 void Game::Start(){
 
     qDebug() << "start";
-	scene->clear();
 
-    if (Level) delete brd;
+    if (!Level)
+        getUserName();
+
+    foreach(QGraphicsItem *item, scene->items())
+    {
+        scene->removeItem(item);
+    }
+    scene->clear();
+
+    if (Level){ 
+        delete brd;
+        delete panel;
+        delete leveldisplay;
+    }
 
     Level++;
 
     if (Level == 4){
-
         this->Close();
-
+        return;
     }
 
     QGraphicsPixmapItem *foobar = new QGraphicsPixmapItem();
@@ -75,6 +117,7 @@ void Game::Start(){
     }
 
     scene->addItem(foobar);
+    drawPanel();
 
     //Setup Board for the current level
     brd = new Board(scene,Level-1);

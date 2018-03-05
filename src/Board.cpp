@@ -1,4 +1,5 @@
 #include <QGraphicsRectItem>
+#include <QGraphicsProxyWidget>
 #include <QGraphicsScene>
 #include <QBrush>
 #include <QList>
@@ -16,6 +17,7 @@
 #include "Player.h"
 #include "Levels.h"
 #include "GenLeveLs.h"
+#include "DigitalClock.h"
 // #include "LevelsData.h"
 
 /*
@@ -119,7 +121,10 @@ Board::Board(QGraphicsScene * scene,int curLevel){
 
     //Creating a new player object
     player = new Player(initposX,initposY,thisLevel->playerStartPosX,thisLevel->playerStartPosY,scene);
-
+    clock = new DigitalClock();
+    clockProxyWidget = scene->addWidget(clock);
+    clockProxyWidget->setPos(460,80);
+    clock->show();
     qDebug() << "Player Inizallized";
 
     //Connecting the clone signal emitted by the player object to the make clone slot
@@ -151,7 +156,7 @@ Board::~Board(){
 void Board::make_clone(QGraphicsScene * scene, const std::vector<Event> player_events){
     qDebug()<< "MAke clone";
     past_self = new Clone(player_events, scene,thisLevel->playerStartPosX,thisLevel->playerStartPosY);
-
+    clock->restart();
 //    past_self->cloneMutex.lock();
     past_self->run = 1;
 //    past_self->cloneMutex.unlock();

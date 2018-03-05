@@ -30,7 +30,7 @@ Clone::Clone(const std::vector<Event> player_events, QGraphicsScene *scene,int X
 
 void Clone::start_moving(){
 
-    qDebug() << "lol start";
+    // qDebug() << "lol start";
 
     uint i=0;
 
@@ -45,7 +45,7 @@ void Clone::start_moving(){
 
                 if (posX-1 >= 0 && game->brd->board[posY][posX-1] && game->brd->board[posY][posX-1] != 8){
 
-                    qDebug() << "Left" << '\n';
+                    // qDebug() << "Left" << '\n';
 
                     posX--;
                 }
@@ -55,7 +55,7 @@ void Clone::start_moving(){
 
                 if (posX+1 < game->brd->l && game->brd->board[posY][posX+1] && game->brd->board[posY][posX+1] != 8){
 
-                    qDebug() << "Right" << '\n';
+                    // qDebug() << "Right" << '\n';
 
                     posX++;
                 }
@@ -65,7 +65,7 @@ void Clone::start_moving(){
 
                 if (posY-1 >= 0 && game->brd->board[posY-1][posX] && game->brd->board[posY-1][posX] != 8){
 
-                    qDebug() << "Up" << '\n';
+                    // qDebug() << "Up" << '\n';
 
                     posY--;
                 }
@@ -75,7 +75,7 @@ void Clone::start_moving(){
 
                 if (posY+1 < game->brd->b && game->brd->board[posY+1][posX] && game->brd->board[posY+1][posX] != 8){
 
-                    qDebug() << "Down" << '\n';
+                    // qDebug() << "Down" << '\n';
 
                     posY++;
                 }
@@ -95,6 +95,6 @@ void Clone::start_moving(){
 //    emit cloneDone();
 
     cloneStop = 1;
-    qDebug() << "done !";
+    // qDebug() << "done !";
 
 }
