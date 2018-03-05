@@ -1,0 +1,25 @@
+.. _class_Board:
+
+Class Board
+===========
+
+- Defined in :ref:`file_include_Board.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public QObject``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: Board
+   :members:
+   :protected-members:
+   :undoc-members:

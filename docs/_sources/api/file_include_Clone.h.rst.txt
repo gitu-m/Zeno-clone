@@ -1,0 +1,60 @@
+
+
+.. _file_include_Clone.h:
+
+File Clone.h
+============
+
+
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``include/Clone.h``)
+--------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_include_Clone.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``Event.h`` (:ref:`file_include_Event.h`)
+
+- ``QGraphicsRectItem``
+
+- ``QGraphicsScene``
+
+- ``chrono``
+
+- ``mutex``
+
+- ``vector``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_include_Board.h`
+
+
+
+
+Classes
+-------
+
+
+- :ref:`class_Clone`
+

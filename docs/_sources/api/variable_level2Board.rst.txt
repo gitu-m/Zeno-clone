@@ -1,0 +1,13 @@
+.. _variable_level2Board:
+
+Variable level2Board
+====================
+
+- Defined in :ref:`file_include_GenLeveLs.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: level2Board

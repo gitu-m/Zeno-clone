@@ -1,0 +1,50 @@
+
+
+.. _file_include_DigitalClock.h:
+
+File DigitalClock.h
+===================
+
+
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``include/DigitalClock.h``)
+---------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_include_DigitalClock.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QLCDNumber``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_include_Board.h`
+
+
+
+
+Classes
+-------
+
+
+- :ref:`class_DigitalClock`
+

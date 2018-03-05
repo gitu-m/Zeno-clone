@@ -1,0 +1,16 @@
+.. _class_Level:
+
+Class Level
+===========
+
+- Defined in :ref:`file_include_Levels.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: Level
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,36 @@
+
+.. _program_listing_file_include_Button.h:
+
+Program Listing for File Button.h
+=================================
+
+- Return to documentation for :ref:`file_include_Button.h`
+
+.. code-block:: cpp
+
+   #ifndef BUTTON_H
+   
+   #define BUTTON_H
+   
+   #include <QGraphicsRectItem>
+   #include <QGraphicsSceneMouseEvent>
+   #include <QBrush>
+   
+   class Button:public QObject, public QGraphicsRectItem{
+       Q_OBJECT
+   
+   public:
+       QBrush brush;
+       QGraphicsTextItem* text;
+   
+       Button(QString name, QGraphicsItem* parent=NULL);
+   
+       void mousePressEvent(QGraphicsSceneMouseEvent *event);
+       void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+       void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+   
+   signals:
+       void clicked();
+   };
+   
+   #endif

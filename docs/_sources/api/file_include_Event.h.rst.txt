@@ -1,0 +1,54 @@
+
+
+.. _file_include_Event.h:
+
+File Event.h
+============
+
+
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``include/Event.h``)
+--------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_include_Event.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QKeyEvent``
+
+- ``chrono``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_include_Player.h`
+
+- :ref:`file_include_Clone.h`
+
+
+
+
+Classes
+-------
+
+
+- :ref:`class_Event`
+

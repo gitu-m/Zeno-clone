@@ -1,0 +1,13 @@
+.. _variable_LevelData:
+
+Variable LevelData
+==================
+
+- Defined in :ref:`file_include_GenLeveLs.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: LevelData

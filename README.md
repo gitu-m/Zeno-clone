@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/IITH-POPL2-Jan2018/concurrency-3.svg?token=xDjVbpvuG8jxXV3hQ9dW&branch=master)](https://travis-ci.com/IITH-POPL2-Jan2018/concurrency-3)
 
-POPL 2 Concurrency Project
+Zeno - 2D Puzzle Game
 ==========================
 
 A 2D Puzzle game involving concurrency for CS2443 course at IIT Hyderabad.
@@ -18,3 +18,7 @@ Compliation
 $ qmake Zeno.pro
 $ make
 ```
+
+Documentation
+-------------
+[Link to Documentation](https://iith-popl2-jan2018.github.io/concurrency-3/)

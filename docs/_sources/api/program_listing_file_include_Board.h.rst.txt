@@ -1,0 +1,66 @@
+
+.. _program_listing_file_include_Board.h:
+
+Program Listing for File Board.h
+================================
+
+- Return to documentation for :ref:`file_include_Board.h`
+
+.. code-block:: cpp
+
+   #ifndef BOARD_H
+   
+   #define BOARD_H
+   
+   #include <QGraphicsProxyWidget>
+   #include <QGraphicsScene>
+   #include <QtCore>
+   #include <QDebug>
+   #include <thread>
+   
+   #include "Tile.h"
+   #include "Player.h"
+   #include "Clone.h"
+   #include "Levels.h"
+   #include "DigitalClock.h"
+   
+   class Board: public QObject{
+       Q_OBJECT
+   
+       std::thread cloneThread;
+   
+   public:
+       int l;
+       int b;
+       int **board;
+       int initposX;
+       int initposY;
+       int curLevel;
+       int cloneSpawned = 0;
+   
+       Level *thisLevel;
+       Player *player;
+       Clone *past_self;
+       Tile ***tilePointers;
+       QGraphicsScene *scene;
+   
+       //TO-DO
+       DigitalClock *clock;
+       
+       //TO-DO
+       QGraphicsProxyWidget * clockProxyWidget;
+   
+       Board(QGraphicsScene *scene,int curLevel);
+       ~Board();
+   
+       void genBoard(QGraphicsScene *scene);
+   
+   signals:
+       void startClone();
+   
+   public slots:
+       void make_clone(QGraphicsScene *scene, const std::vector <Event> player_events);
+       void changeClonePos(int X, int Y);
+   };
+   
+   #endif

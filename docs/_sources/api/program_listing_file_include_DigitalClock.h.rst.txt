@@ -1,0 +1,29 @@
+
+.. _program_listing_file_include_DigitalClock.h:
+
+Program Listing for File DigitalClock.h
+=======================================
+
+- Return to documentation for :ref:`file_include_DigitalClock.h`
+
+.. code-block:: cpp
+
+   #ifndef DIGITALCLOCK_H
+   #define DIGITALCLOCK_H
+   
+   #include <QLCDNumber>
+   
+   class DigitalClock : public QLCDNumber
+   {
+       Q_OBJECT
+   
+   public:
+       DigitalClock(QWidget *parent = 0);
+   
+       void restart();
+   
+   private slots:
+       void showTime();
+   };
+   
+   #endif

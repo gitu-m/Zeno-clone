@@ -1,0 +1,25 @@
+.. _class_Game:
+
+Class Game
+==========
+
+- Defined in :ref:`file_include_Game.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public QGraphicsView``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: Game
+   :members:
+   :protected-members:
+   :undoc-members:

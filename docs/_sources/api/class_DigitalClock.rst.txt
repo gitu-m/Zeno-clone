@@ -1,0 +1,25 @@
+.. _class_DigitalClock:
+
+Class DigitalClock
+==================
+
+- Defined in :ref:`file_include_DigitalClock.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public QLCDNumber``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: DigitalClock
+   :members:
+   :protected-members:
+   :undoc-members:

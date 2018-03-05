@@ -1,0 +1,54 @@
+
+
+.. _file_include_Game.h:
+
+File Game.h
+===========
+
+
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``include/Game.h``)
+-------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_include_Game.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``Board.h`` (:ref:`file_include_Board.h`)
+
+- ``Player.h`` (:ref:`file_include_Player.h`)
+
+- ``QGraphicsRectItem``
+
+- ``QGraphicsScene``
+
+- ``QGraphicsView``
+
+- ``QWidget``
+
+
+
+
+
+
+Classes
+-------
+
+
+- :ref:`class_Game`
+

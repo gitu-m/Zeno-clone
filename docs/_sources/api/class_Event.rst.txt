@@ -1,0 +1,16 @@
+.. _class_Event:
+
+Class Event
+===========
+
+- Defined in :ref:`file_include_Event.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: Event
+   :members:
+   :protected-members:
+   :undoc-members:

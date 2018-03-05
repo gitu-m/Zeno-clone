@@ -40,3 +40,6 @@ Makefile
 qrc_res.cpp
 .qmake.stash
 
+docs/api
+docs/_bulid
+docs/.doctress

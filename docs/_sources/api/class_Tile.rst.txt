@@ -1,0 +1,26 @@
+.. _class_Tile:
+
+Class Tile
+==========
+
+- Defined in :ref:`file_include_Tile.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Types
+**********
+
+- ``public QObject``
+- ``public QGraphicsPixmapItem``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: Tile
+   :members:
+   :protected-members:
+   :undoc-members:

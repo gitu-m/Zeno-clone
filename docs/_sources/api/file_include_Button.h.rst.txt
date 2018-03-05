@@ -1,0 +1,48 @@
+
+
+.. _file_include_Button.h:
+
+File Button.h
+=============
+
+
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``include/Button.h``)
+---------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_include_Button.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QBrush``
+
+- ``QGraphicsRectItem``
+
+- ``QGraphicsSceneMouseEvent``
+
+
+
+
+
+
+Classes
+-------
+
+
+- :ref:`class_Button`
+

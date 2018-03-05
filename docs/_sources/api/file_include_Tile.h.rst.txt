@@ -1,0 +1,52 @@
+
+
+.. _file_include_Tile.h:
+
+File Tile.h
+===========
+
+
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``include/Tile.h``)
+-------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_include_Tile.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QGraphicsPixmapItem``
+
+- ``QObject``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_include_Board.h`
+
+
+
+
+Classes
+-------
+
+
+- :ref:`class_Tile`
+

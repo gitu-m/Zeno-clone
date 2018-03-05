@@ -1,0 +1,54 @@
+
+.. _program_listing_file_include_Tile.h:
+
+Program Listing for File Tile.h
+===============================
+
+- Return to documentation for :ref:`file_include_Tile.h`
+
+.. code-block:: cpp
+
+   #ifndef TILE_H
+   
+   #define TILE_H
+   
+   #include <QGraphicsPixmapItem>
+   #include <QObject>
+   
+   class Tile : public QObject, public QGraphicsPixmapItem{
+       Q_OBJECT
+   
+   public:
+       int type;
+   
+       int posX,posY;
+   
+       bool isTriggered = false;
+   
+       Tile(int type,int posX,int posY);
+   
+       void renderTile();
+   
+       void moveTile();
+   
+       void resetTile();
+   
+       int MovStartX = 0;
+       int MovStartY = 0;
+   
+       int MovEndX = 0;
+       int MovEndY = 0;
+   
+   signals:
+       void fadeTileTriggered();
+       void fadeTileUntrigger();
+   
+   public slots:
+   
+       void fadeTile();
+       void unfadeTile();
+       void move();
+   
+   };
+   
+   #endif
