@@ -18,7 +18,3 @@ Compliation
 $ qmake Zeno.pro
 $ make
 ```
-
-Documentation
--------------
-[Link to Documentation](https://iith-popl2-jan2018.github.io/concurrency-3/)
