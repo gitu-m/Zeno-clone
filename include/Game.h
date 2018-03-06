@@ -6,10 +6,11 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsView>
 #include <QWidget>
+#include <QSound>
 
 #include "Player.h"
 #include "Board.h"
-
+#include "Button.h"
 
 class Game : public QGraphicsView{
 	Q_OBJECT
@@ -30,15 +31,11 @@ public:
 	*/
 	QGraphicsScene *scene;
 	/*!
-	* The baord associated with the game.
+    * The board associated with the game.
 	*/
 	Board *brd;
 
-    /*!
-     * Variable to keep track of concurrent generation of the board
-     */
-
-    QFuture<void> f1;
+    QSound * mBackground;
 
 	//To-Do
 	QGraphicsRectItem* panel;
@@ -96,6 +93,15 @@ public slots:
     * This slot is to display the game over screen when the player looses
     */
     void gameOver();
+    /*!
+    * This slot is responsible for restarting the level.
+    */
+    void restart();
+    /*!
+    * This slot is responsible to toggle the sound.
+    */
+    void mute();
+
 };
 
 #endif

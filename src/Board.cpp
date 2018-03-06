@@ -131,9 +131,11 @@ Board::Board(QGraphicsScene * scene,int curLevel){
 
     //Creating a new player object
     player = new Player(initposX,initposY,thisLevel->playerStartPosX,thisLevel->playerStartPosY,scene);
+
+    //Creating a new clock object
     clock = new DigitalClock();
     clockProxyWidget = scene->addWidget(clock);
-    clockProxyWidget->setPos(460,80);
+    clockProxyWidget->setPos(460,120);
     clock->show();
     qDebug() << "Player Inizallized";
 
@@ -239,6 +241,11 @@ void Board::changeClonePos(int X, int Y){
 
                 emit tilePointers[thisLevel->fadeTriggerPosY][thisLevel->fadeTriggerPosX]->fadeTileUntrigger();
             }
+        }
+
+        else if (typeid(*colliding_items[i]) == typeid(Player)){
+
+            //emit gameOverSignal;
         }
     }
 }

@@ -57,6 +57,8 @@ public:
 	int MovEndX = 0;
 	int MovEndY = 0;
 
+    QTimer * timer;
+
 signals:
 	/*!
 	* This is set of the trigger for the fading tile.

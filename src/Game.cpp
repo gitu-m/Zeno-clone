@@ -20,7 +20,7 @@ Game::Game(){
     setScene(scene);
 
 
-    QSound * mBackground = new QSound("./resources/Sounds/AmbientMusic1.wav");
+    mBackground = new QSound("./resources/Sounds/AmbientMusic1.wav");
 
     // QtConcurrent::run(past_self->start_moving(player_events,scene));
     // connect(player,SIGNAL(level_over()),this,SLOT(remove_clone()));
@@ -60,6 +60,36 @@ void Game::drawPanel(){
     panel->setBrush(brush);
     panel->setOpacity(1);
     scene->addItem(panel);
+
+    QGraphicsTextItem * time = new QGraphicsTextItem(QString("Time Elapsed"));
+    time->setDefaultTextColor(Qt::white);
+    time->setFont(QFont("times",20));
+    time->setPos(460,80);
+    scene->addItem(time);
+
+    Button * restartButton = new Button(QString("Restart Level"));
+
+//    restartButton->boundingRect().setRect(panel->x(), panel->y(), restartButton->boundingRect().width(), restartButton->boundingRect().height());
+
+    //Setting the co-ordinates for the restart button in the current scene
+    int nxPos = scene->width() - panel->boundingRect().width()/2 - restartButton->boundingRect().width()/2;
+    int nyPos = panel->boundingRect().height()/2 + restartButton->boundingRect().height()/2; ;
+    restartButton->setPos(nxPos,nyPos);
+    scene->addItem(restartButton);
+
+    connect(restartButton, SIGNAL(clicked()), this, SLOT(restart()));
+
+    Button * muteButton = new Button(QString("Mute/Unmute Sound"));
+
+//    restartButton->boundingRect().setRect(panel->x(), panel->y(), restartButton->boundingRect().width(), restartButton->boundingRect().height());
+
+    //Setting the co-ordinates for the restart button in the current scene
+    int bxPos = scene->width() - panel->boundingRect().width()/2 - restartButton->boundingRect().width()/2;
+    int byPos = restartButton->y() + restartButton->boundingRect().height() + 20;
+    muteButton->setPos(bxPos,byPos);
+    scene->addItem(muteButton);
+
+    connect(muteButton, SIGNAL(clicked()), this, SLOT(mute()));
 
     leveldisplay = new QGraphicsTextItem(QString("Level: ") + QString::number(Level));
     leveldisplay->setDefaultTextColor(Qt::white);
@@ -229,13 +259,11 @@ void Game::gameOver(){
     foreach(QGraphicsItem *item, scene->items()){
 
         scene->removeItem(item);
-//        delete item;
     }
 
     scene->clear();
 
     if (Level){
-//        delete brd->player;
         delete brd;
         delete panel;
         delete leveldisplay;
@@ -271,6 +299,54 @@ void Game::gameOver(){
     scene->addItem(menu);
 
     connect(menu, SIGNAL(clicked()), this, SLOT(displayMenuSlot()));
+
+}
+
+void Game::restart(){
+
+    foreach(QGraphicsItem *item, scene->items()){
+
+        scene->removeItem(item);
+    }
+    scene->clear();
+
+    if (Level){
+        delete brd;
+        delete panel;
+        delete leveldisplay;
+    }
+
+    QGraphicsPixmapItem *foobar = new QGraphicsPixmapItem();
+
+    switch(Level){
+        qDebug() << "start";
+        case 1: foobar->setPixmap(QPixmap("./resources/Backgrounds/level1.png")); break;
+        case 2: foobar->setPixmap(QPixmap("./resources/Backgrounds/level2.png")); break;
+        case 3: foobar->setPixmap(QPixmap("./resources/Backgrounds/level3.png")); break;
+    }
+
+    scene->addItem(foobar);
+    drawPanel();
+
+    //Setup Board for the current level
+    brd = new Board(scene,Level-1);
+
+    //Connecting the level over signal emitted by the player to the start slot to render the new level
+    connect(brd->player, SIGNAL(level_over()),this,SLOT(Start()));
+
+    //Connecting the game over signal emitted by the player to the game over slot of the game
+    connect(brd->player, SIGNAL(gameOverSignal()), this, SLOT(gameOver()));
+
+
+}
+
+void Game::mute(){
+
+    if(!mBackground->isFinished()){
+        mBackground->stop();
+    }
+
+    else mBackground->play();
 
 }
 void Game::Close(){

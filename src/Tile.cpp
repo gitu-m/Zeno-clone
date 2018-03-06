@@ -72,6 +72,7 @@ void Tile::unfadeTile(){
 
             //Emit game over signal
             emit game_over();
+            return;
         }
     }
 
@@ -81,8 +82,7 @@ void Tile::unfadeTile(){
 void Tile::moveTile(){
 	this->isTriggered = !(this->isTriggered);
 
-	qDebug() <<x()<<y()<<"Called";
-	qDebug() <<game->brd->player->posX ;
+    qDebug() <<x()<<y()<<"Called";
 	flag = 0;
 	if (game->brd->player->posX == posX && game->brd->player->posY == posY){
 		flag = 1;
@@ -96,43 +96,48 @@ void Tile::moveTile(){
 	game->brd->board[posY][posX] = 0;
 	game->brd->board[posX + xToMove/40][posY + yToMove/40] = 1;
 
-	QTimer * timer = new QTimer(this);
+    timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(move()));
 	timer->start(10);
+
 
 }
 
 void Tile::move(){
 	if (xToMove != 0){
-		if (xToMove > 0)
-{
-			xToMove -= 1;
+		if (xToMove > 0){
+
+            xToMove -= 1;
 			setPos(x()+1,y());
 			if(flag)
 				game->brd->player->setPos(game->brd->player->x()+1,game->brd->player->y());
 		}
-		else
-{
-			xToMove += 1;
+		else{
+
+            xToMove += 1;
 			setPos(x()-1,y());
 			if(flag)
 				game->brd->player->setPos(game->brd->player->x()-1,game->brd->player->y());
 		}
 	}
-	if (yToMove != 0){
-		if (yToMove > 0 )
-{
-			yToMove -= 1;
+
+    if (yToMove != 0){
+		if (yToMove > 0 ){
+
+            yToMove -= 1;
 			setPos(x(),y()+1);
 			if(flag)
 				game->brd->player->setPos(game->brd->player->x(),game->brd->player->y()+1);
 		}
-		else
-{
+		else{
+
 			yToMove += 1;
 			setPos(x(),y()-1);
 			if(flag)
 				game->brd->player->setPos(game->brd->player->x(),game->brd->player->y()-1);
 		}
 	}
+
+    if ( xToMove == 0 && yToMove == 0) delete timer;
+
 }

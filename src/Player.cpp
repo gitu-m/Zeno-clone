@@ -149,6 +149,8 @@ void Player::keyPressEvent(QKeyEvent *event){
 //                qDebug() << game->brd->thisLevel->movPosX << " " << game->brd->thisLevel->moveStartPosY;
                 if(!game->brd->tilePointers[game->brd->thisLevel->moveStartPosY][game->brd->thisLevel->moveStartPosX]->isTriggered){
                     game->brd->tilePointers[game->brd->thisLevel->moveStartPosY][game->brd->thisLevel->moveStartPosX]->moveTile();
+
+                    qDebug() << game->brd->thisLevel->moveEndPosX << " " << game->brd->thisLevel->moveEndPosY;
                 }
             }
 
@@ -163,7 +165,8 @@ void Player::keyPressEvent(QKeyEvent *event){
                 //Game over, emitting level over for now
                 //TODO write a game over signal and functionality
 
-//                emit game_over();
+                emit gameOverSignal();
+                return;
             }
 
             else if (fadeTrigger == 1){// Emit untrigger signal

@@ -1,5 +1,6 @@
 #include <QtWidgets>
 #include <QElapsedTimer>
+#include <QDebug>
 
 #include "DigitalClock.h"
 
@@ -27,6 +28,7 @@ void DigitalClock::showTime()
     // if ((time.second() % 2) == 0)
     //     text[2] = ' ';
     display(text);
+
 }
 
 void DigitalClock::restart()
