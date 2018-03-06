@@ -1,8 +1,8 @@
-#include <QMediaPlaylist>
-#include <QMediaPlayer>
+#include <QtConcurrent>
 #include <QDebug>
 #include <QGraphicsPixmapItem>
 #include <QInputDialog>
+#include <QSound>
 
 #include "Game.h"
 #include "Player.h"
@@ -19,17 +19,17 @@ Game::Game(){
     //Setting the main scene to be displayed to the current scene
     setScene(scene);
 
-    //Create playlist
-    QMediaPlaylist *playlist = new QMediaPlaylist();
-    playlist->addMedia(QUrl("qrc:/sounds/AmbientMusic1.wav"));
-    playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
-    //Play background music
-    QMediaPlayer * bg_music = new QMediaPlayer();
-    bg_music->setPlaylist(playlist);
-    bg_music->play();
+    QSound * mBackground = new QSound("./resources/Sounds/AmbientMusic1.wav");
 
-    playlist->moveToThread(&mthread);
+    // QtConcurrent::run(past_self->start_moving(player_events,scene));
+    // connect(player,SIGNAL(level_over()),this,SLOT(remove_clone()));
+
+//    QtConcurrent::run(mBackground->play);
+
+    mBackground->setLoops(QSound::Infinite);
+    mBackground->play();
+//    QSound::play("./resources/Sounds/AmbientMusic1.wav");
 
     //Setting the current level to 0
     Level = 0;
@@ -81,15 +81,17 @@ void Game::getUserName(){
         userName = text;
 }
 
+
 void Game::Start(){
 
     qDebug() << "start";
 
-    if (!Level)
+    if (!Level){
         getUserName();
+    }
 
-    foreach(QGraphicsItem *item, scene->items())
-    {
+    foreach(QGraphicsItem *item, scene->items()){
+
         scene->removeItem(item);
     }
     scene->clear();
@@ -100,6 +102,7 @@ void Game::Start(){
         delete leveldisplay;
     }
 
+    // Increase Level for Next Call
     Level++;
 
     if (Level == 4){
@@ -122,11 +125,11 @@ void Game::Start(){
     //Setup Board for the current level
     brd = new Board(scene,Level-1);
 
-    // Increase Level for Next Call
-//    Level++;
-
     //Connecting the level over signal emitted by the player to the start slot to render the new level
     connect(brd->player, SIGNAL(level_over()),this,SLOT(Start()));
+
+    //Connecting the game over signal emitted by the player to the game over slot of the game
+    connect(brd->player, SIGNAL(gameOverSignal()), this, SLOT(gameOver()));
 }
 
 int ruleNum = 0;
@@ -221,6 +224,55 @@ void Game::Rules(){
     }
 }
 
+void Game::gameOver(){
+
+    foreach(QGraphicsItem *item, scene->items()){
+
+        scene->removeItem(item);
+//        delete item;
+    }
+
+    scene->clear();
+
+    if (Level){
+//        delete brd->player;
+        delete brd;
+        delete panel;
+        delete leveldisplay;
+    }
+
+    //Reset level
+    Level = 0;
+
+
+    //Setting the background for the game over screen
+    QGraphicsPixmapItem *foo = new QGraphicsPixmapItem();
+    foo->setPixmap(QPixmap("./resources/Backgrounds/blackGame.png"));
+    scene->addItem(foo);
+
+
+    //Setting the game over image
+    QGraphicsPixmapItem *gameText = new QGraphicsPixmapItem();
+    gameText->setPixmap(QPixmap("./resources/Backgrounds/gameoverwriting.png"));
+    gameText->setPos(this->width()/2 - gameText->boundingRect().width()/2, 75);
+
+
+    //Add image to screen
+    scene->addItem(gameText);
+
+    //Setting the text in the next button
+    Button* menu = new Button(QString("Menu"));
+
+
+    //Setting the co-ordinates for the menu button in the current scene
+    int nxPos = this->width()/2 - menu->boundingRect().width()/2;
+    int nyPos = 250;
+    menu->setPos(nxPos,nyPos);
+    scene->addItem(menu);
+
+    connect(menu, SIGNAL(clicked()), this, SLOT(displayMenuSlot()));
+
+}
 void Game::Close(){
     //Clearing the scene before quitting
     scene->clear();

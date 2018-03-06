@@ -27,15 +27,13 @@ Player::Player(int initposX,int initposY,int playerStartPosX,int playerStartPosY
     this->setFocus();
     scene->addItem(this);
 
-    qDebug() << "debug player";
 
     time_spawned = std::chrono::steady_clock::now();
 }
 
 void Player::keyPressEvent(QKeyEvent *event){
     //Check if the player is waiting
-     while(isWaiting);
-
+//     while(isWaiting);
 
     //Creating a new event to store the information of the current input
     Event *key_pressed =  new Event();
@@ -114,6 +112,13 @@ void Player::keyPressEvent(QKeyEvent *event){
             }
         }
 
+        else if (typeid(*colliding_items[i]) == typeid(Clone)){
+
+            qDebug() << "Clone and player collide";
+            emit gameOverSignal();
+            return;
+        }
+
         //If the colliding object is a tile
         else if (typeid(*colliding_items[i]) == typeid(Tile)){
             //Checking the type of the tile
@@ -126,6 +131,7 @@ void Player::keyPressEvent(QKeyEvent *event){
 
                 //Level over
                 emit level_over();
+                return;
             }
 
             //If the tile is a trigger
@@ -157,7 +163,7 @@ void Player::keyPressEvent(QKeyEvent *event){
                 //Game over, emitting level over for now
                 //TODO write a game over signal and functionality
 
-                emit level_over();
+//                emit game_over();
             }
 
             else if (fadeTrigger == 1){// Emit untrigger signal
@@ -168,5 +174,6 @@ void Player::keyPressEvent(QKeyEvent *event){
 
             }
         }
+
     }
 }

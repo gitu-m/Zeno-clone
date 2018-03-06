@@ -70,6 +70,8 @@ signals:
     * This signal is called when a fading tile has been triggered.
     */
     void fadeTileTriggered();
+
+    void gameOverSignal();
 };
 
 #endif

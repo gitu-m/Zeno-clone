@@ -1,6 +1,7 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsProxyWidget>
 #include <QGraphicsScene>
+#include <QtConcurrent>
 #include <QBrush>
 #include <QList>
 #include <iostream>
@@ -13,6 +14,7 @@
 #include "Tile.h"
 #include "Tesseract.h"
 #include "Clone.h"
+#include "Game.h"
 #include "Board.h"
 #include "Player.h"
 #include "Levels.h"
@@ -30,11 +32,18 @@
 *   6   - Tesseract
 */
 
+extern Game * game;
+
 Board::Board(QGraphicsScene * scene,int curLevel){
     //Creating a struct of type Level1
-    gen();
+//    gen();
+
+    QFuture<void> f1 = QtConcurrent::run(gen);
+
     qDebug() << curLevel;
     this->curLevel = curLevel;
+
+    f1.waitForFinished();
     thisLevel = &LevelData[curLevel];
 
 
@@ -113,6 +122,7 @@ Board::Board(QGraphicsScene * scene,int curLevel){
         connect(tilePointers[thisLevel->fadeTriggerPosY][thisLevel->fadeTriggerPosX], SIGNAL(fadeTileTriggered()), tilePointers[Y][X], SLOT(fadeTile()));
         connect(tilePointers[thisLevel->fadeTriggerPosY][thisLevel->fadeTriggerPosX], SIGNAL(fadeTileUntrigger()), tilePointers[Y][X], SLOT(unfadeTile()));
 
+        connect(tilePointers[Y][X], SIGNAL(game_over()), game, SLOT(gameOver()));
     }
 
 //    connect(tilePointers[thisLevel->fadeTriggerPosY][thisLevel->fadeTriggerPosX], SIGNAL(fadeTileTriggered()), tilePointers[3][4], SLOT(fadeTile()));
@@ -129,6 +139,8 @@ Board::Board(QGraphicsScene * scene,int curLevel){
 
     //Connecting the clone signal emitted by the player object to the make clone slot
     connect(player, SIGNAL(clone(QGraphicsScene *, std::vector <Event>)), this, SLOT(make_clone(QGraphicsScene *, const std::vector <Event>)));
+
+
 }
 
 Board::~Board(){
@@ -137,12 +149,10 @@ Board::~Board(){
 
         past_self->run = 0;
 
-//        while(!past_self->cloneStop);
-
-        qDebug() << "clone exited";
-
         cloneThread.join();
         cloneThread.~thread(); // Delete the thread
+
+        delete player;
 
     }
 
@@ -154,7 +164,7 @@ Board::~Board(){
 }
 
 void Board::make_clone(QGraphicsScene * scene, const std::vector<Event> player_events){
-    qDebug()<< "MAke clone";
+
     past_self = new Clone(player_events, scene,thisLevel->playerStartPosX,thisLevel->playerStartPosY);
     clock->restart();
 //    past_self->cloneMutex.lock();
