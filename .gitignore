@@ -33,8 +33,6 @@ moc_*
 *.app
 Zeno
 
-# MakeFile
-Makefile
 *.pro.user
 
 qrc_res.cpp
