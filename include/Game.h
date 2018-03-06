@@ -66,7 +66,7 @@ public:
 	void displayMenu();
 
 	//To-Do
-	void drawPanel();
+    void drawPanel();
 
 	//To-Do
 	void getUserName();

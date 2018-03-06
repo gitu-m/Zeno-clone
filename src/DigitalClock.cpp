@@ -21,8 +21,8 @@ DigitalClock::DigitalClock(QWidget *parent)
     resize(150, 60);
 }
 
-void DigitalClock::showTime()
-{
+void DigitalClock::showTime(){
+
     // QTime time = QTime::currentTime() - time0;
     QString text =  QString::number(timer.elapsed()/1000);
     // if ((time.second() % 2) == 0)
@@ -31,7 +31,7 @@ void DigitalClock::showTime()
 
 }
 
-void DigitalClock::restart()
-{
+void DigitalClock::restart(){
+
     timer.restart();
 }

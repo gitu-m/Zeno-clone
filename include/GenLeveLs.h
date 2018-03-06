@@ -50,9 +50,24 @@ int level2Board[7][7] = {{0,0,0,0,0,0,0},
                          {0,0,0,0,0,0,0}};
 
 /*!
+* The layout of the second level.
+*/
+int level3Board[6][6] = {{1,1,3,0,0,0},
+                         {8,0,0,0,0,0},
+                         {8,0,0,0,0,0},
+                         {1,1,1,7,1,2},
+                         {0,0,1,1,0,0},
+                         {0,0,0,1,1,6}};
+
+/*!
 * The positions of the faded tiles in level 2.
 */
 int level2fading[3][2] = {{3,3},{4,3},{5,3}};
+
+/*!
+* The positions of the faded tiles in level 3.
+*/
+int level3fading[2][2] = {{0,1},{0,2}};
 
 /*!
 * This method is responisble for generating the level data.
@@ -143,4 +158,39 @@ void gen(){
     LevelData[2].fadeTriggerPosX = 6;
     LevelData[2].fadeTriggerPosY = 5;
     LevelData[2].fadeTileCount = 3;
+
+    /*-----------------------------------------------------------------------------------*/
+    /*Level 3*/
+
+    LevelData[3].length = 6;
+    LevelData[3].breath = 6;
+
+    LevelData[3].levelBoard = new int*[LevelData[3].length];
+    for (int i = 0 ; i < LevelData[3].length ; i++){
+        LevelData[3].levelBoard[i] = new int[LevelData[3].breath];
+    }
+
+    for (int i = 0 ; i < LevelData[3].length ; i++){
+        for ( int j = 0 ; j < LevelData[3].breath ; j++){
+            LevelData[3].levelBoard[i][j] = level3Board[i][j];
+        }
+    }
+
+    LevelData[3].fadeTiles = new int*[2];
+    for (int i = 0 ; i < 2 ; i++){
+        LevelData[3].fadeTiles[i] = new int[3];
+    }
+
+    for (int i = 0 ; i < 2 ; i++){
+        for ( int j = 0 ; j < 3 ; j++){
+            LevelData[3].fadeTiles[i][j] = level3fading[j][i];
+        }
+    }
+
+    LevelData[3].playerStartPosX = 5;
+    LevelData[3].playerStartPosY = 3;
+
+    LevelData[3].fadeTriggerPosX = 3;
+    LevelData[3].fadeTriggerPosY = 3;
+    LevelData[3].fadeTileCount = 2;
 }

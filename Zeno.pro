@@ -14,10 +14,10 @@ HEADERS +=	include/Board.h \
 		 	include/Event.h \
 		 	include/Tesseract.h \
 		 	include/Tile.h \
-            include/Clone.h \
-            include/Levels.h \
-            include/GenLeveLs.h \
-            include/DigitalClock.h
+                        include/Clone.h \
+                        include/Levels.h \
+                        include/GenLeveLs.h \
+                        include/DigitalClock.h
 
 SOURCES += 	main.cpp \
 			src/Board.cpp \
@@ -33,7 +33,8 @@ CONFIG += c++11
 
 QMAKE_CXXFLAGS += -g
 
+RESOURCES +=
+
 QT += core gui widgets concurrent\
 	multimedia
 
-RESOURCES +=

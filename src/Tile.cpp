@@ -64,17 +64,17 @@ void Tile::unfadeTile(){
         this->renderTile();
     }
 
-    QList<QGraphicsItem *> colliding_items = collidingItems();
+//    QList<QGraphicsItem *> colliding_items = collidingItems();
 
-    for ( int i = 0 ; i < colliding_items.size() ; i++){
+//    for ( int i = 0 ; i < colliding_items.size() ; i++){
 
-        if (typeid(*colliding_items[i]) == typeid(Player)){
+//        if (typeid(*colliding_items[i]) == typeid(Player)){
 
-            //Emit game over signal
-            emit game_over();
-            return;
-        }
-    }
+//            //Emit game over signal
+//            emit game_over();
+//            return;
+//        }
+//    }
 
 }
 

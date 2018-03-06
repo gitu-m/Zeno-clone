@@ -23,6 +23,9 @@ class Board: public QObject{
     std::thread cloneThread;
 
 public:
+    /*!
+    * Lenght of the current baord.
+    */
     int l;
     /*!
     * Breadth of the current baord.
@@ -93,11 +96,16 @@ public:
     */
     void genBoard(QGraphicsScene *scene);
 
+
 signals:
     /*!
     * Signal to start the generation of a clone.
     */
     void startClone();
+    /*!
+    * Signal emitted to indicate that the clone has collided with the player.
+    */
+    void gameOverSignal();
 
 public slots:
     /*!

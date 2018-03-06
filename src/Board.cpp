@@ -8,6 +8,7 @@
 #include <chrono>
 #include <QDebug>
 #include <QtConcurrent>
+#include <QFuture>
 #include <thread>
 #include <typeinfo>
 
@@ -132,11 +133,11 @@ Board::Board(QGraphicsScene * scene,int curLevel){
     //Creating a new player object
     player = new Player(initposX,initposY,thisLevel->playerStartPosX,thisLevel->playerStartPosY,scene);
 
-    //Creating a new clock object
     clock = new DigitalClock();
     clockProxyWidget = scene->addWidget(clock);
     clockProxyWidget->setPos(460,120);
     clock->show();
+
     qDebug() << "Player Inizallized";
 
     //Connecting the clone signal emitted by the player object to the make clone slot
@@ -178,7 +179,11 @@ void Board::make_clone(QGraphicsScene * scene, const std::vector<Event> player_e
     //Connecting the make move signal to get the clone moving
     connect(past_self, &Clone::makeMove,this,&Board::changeClonePos);
 
+    //Connecting the game over signal to the game over slot of the game
+    connect(this, SIGNAL(gameOverSignal()), game, SLOT(gameOver()));
+
     cloneThread = std::thread(&Clone::start_moving, past_self);
+
 
 
 }
@@ -233,6 +238,7 @@ void Board::changeClonePos(int X, int Y){
                 //TODO write a game over signal and functionality
 
                 emit player->level_over();
+                return;
             }
 
             else if (past_self->fadeTrigger == 1 && tileType != 7){// Emit untrigger signal
@@ -245,7 +251,8 @@ void Board::changeClonePos(int X, int Y){
 
         else if (typeid(*colliding_items[i]) == typeid(Player)){
 
-            //emit gameOverSignal;
+            emit gameOverSignal();
+            return;
         }
     }
 }

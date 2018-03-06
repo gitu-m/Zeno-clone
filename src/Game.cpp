@@ -19,17 +19,14 @@ Game::Game(){
     //Setting the main scene to be displayed to the current scene
     setScene(scene);
 
+    setFixedSize(size());
 
     mBackground = new QSound("./resources/Sounds/AmbientMusic1.wav");
 
-    // QtConcurrent::run(past_self->start_moving(player_events,scene));
-    // connect(player,SIGNAL(level_over()),this,SLOT(remove_clone()));
-
-//    QtConcurrent::run(mBackground->play);
-
     mBackground->setLoops(QSound::Infinite);
-    mBackground->play();
-//    QSound::play("./resources/Sounds/AmbientMusic1.wav");
+//    mBackground->play();
+    QFuture<void> f1 = QtConcurrent::run(mBackground, &QSound::play);
+
 
     //Setting the current level to 0
     Level = 0;
@@ -56,7 +53,7 @@ void Game::drawPanel(){
     panel = new QGraphicsRectItem(440,0,200,480);
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);
-    brush.setColor(Qt::darkGray);
+    brush.setColor(Qt::darkCyan);
     panel->setBrush(brush);
     panel->setOpacity(1);
     scene->addItem(panel);
@@ -95,13 +92,16 @@ void Game::drawPanel(){
     leveldisplay->setDefaultTextColor(Qt::white);
     leveldisplay->setFont(QFont("times",20));
     leveldisplay->setPos(460,20);
+//    leveldisplay->setParent(panel);
     scene->addItem(leveldisplay);
 
     userNamedisplay = new QGraphicsTextItem(userName);
     userNamedisplay->setDefaultTextColor(Qt::white);
     userNamedisplay->setFont(QFont("times",20));
     userNamedisplay->setPos(460,420);
+//    userNamedisplay->setParent(panel);
     scene->addItem(userNamedisplay);
+
 }
 
 void Game::getUserName(){
@@ -135,7 +135,7 @@ void Game::Start(){
     // Increase Level for Next Call
     Level++;
 
-    if (Level == 4){
+    if (Level == 5){
         this->Close();
         return;
     }
@@ -144,9 +144,13 @@ void Game::Start(){
 
     switch(Level){
         qDebug() << "start";
-        case 1: foobar->setPixmap(QPixmap("./resources/Backgrounds/level1.png")); break;
-        case 2: foobar->setPixmap(QPixmap("./resources/Backgrounds/level2.png")); break;
-        case 3: foobar->setPixmap(QPixmap("./resources/Backgrounds/level3.png")); break;
+        case 1:
+        case 4:
+            foobar->setPixmap(QPixmap("./resources/Backgrounds/level1.png")); break;
+        case 2:
+        case 3:
+            foobar->setPixmap(QPixmap("./resources/Backgrounds/level2.png")); break;
+//        case 3: foobar->setPixmap(QPixmap("./resources/Backgrounds/level3.png")); break;
     }
 
     scene->addItem(foobar);
@@ -347,6 +351,8 @@ void Game::mute(){
     }
 
     else mBackground->play();
+
+    brd->player->setFocus();
 
 }
 void Game::Close(){
