@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.com/IITH-POPL2-Jan2018/concurrency-3.svg?token=xDjVbpvuG8jxXV3hQ9dW&branch=master)](https://travis-ci.com/IITH-POPL2-Jan2018/concurrency-3)
-[![Documentation Status](https://readthedocs.com/projects/iith-concurrency-3/badge/?version=latest)](https://iith-concurrency-3.readthedocs-hosted.com/en/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.com/projects/iith-zeno/badge/?version=latest)](https://iith-zeno.readthedocs-hosted.com/en/latest/?badge=latest)
 
 Zeno - 2D Puzzle Game
 ==========================
@@ -22,4 +22,4 @@ $ make
 
 Documentation
 -------------
-[Link to Documentation](https://iith-concurrency-3.readthedocs-hosted.com/en/latest/index.html)
+[Link to Documentation](https://iith-zeno.readthedocs-hosted.com/en/latest/)
