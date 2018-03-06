@@ -67,6 +67,8 @@ signals:
 	*/
     void fadeTileUntrigger();
 
+    void game_over();
+
 public slots:
 
 	/*!

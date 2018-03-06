@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QThread>
 #include <typeinfo>
+#include <QList>
 
 #include "Player.h"
 #include "Tile.h"
@@ -61,6 +62,17 @@ void Tile::unfadeTile(){
         this->type = 8;
         game->brd->board[this->posY][this->posX] = 8;
         this->renderTile();
+    }
+
+    QList<QGraphicsItem *> colliding_items = collidingItems();
+
+    for ( int i = 0 ; i < colliding_items.size() ; i++){
+
+        if (typeid(*colliding_items[i]) == typeid(Player)){
+
+            //Emit game over signal
+            emit game_over();
+        }
     }
 
 }

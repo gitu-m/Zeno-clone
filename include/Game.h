@@ -34,6 +34,12 @@ public:
 	*/
 	Board *brd;
 
+    /*!
+     * Variable to keep track of concurrent generation of the board
+     */
+
+    QFuture<void> f1;
+
 	//To-Do
 	QGraphicsRectItem* panel;
 	//To-Do
@@ -68,6 +74,7 @@ public:
 	//To-Do
 	void getUserName();
 	
+
 public slots:
 	/*!
 	* This slot is responsible for starting the game.
@@ -85,6 +92,10 @@ public slots:
 	* This slot is to ensure that menu is displayed after clicking the next button in the last rule.
 	*/
 	void displayMenuSlot();
+    /*!
+    * This slot is to display the game over screen when the player looses
+    */
+    void gameOver();
 };
 
 #endif

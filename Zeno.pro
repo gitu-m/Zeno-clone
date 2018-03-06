@@ -36,5 +36,4 @@ QMAKE_CXXFLAGS += -g
 QT += core gui widgets concurrent\
 	multimedia
 
-RESOURCES += \
-    res.qrc
+RESOURCES +=
