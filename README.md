@@ -15,13 +15,18 @@ $ sudo apt-get update
 $ sudo apt-get install qtdeclarative5-dev qt5-qmake qt5-default qtmultimedia5-dev libqt5multimediawidgets5 libqt5multimedia5-plugins libqt5multimedia5
 ```
 
-Compliation
+Build
 -----------
 ```bash
-$ qmake Zeno.pro
-$ make
+$ ./build.sh
+```
+
+Execution
+---------
+```bash
+$ ./run.sh
 ```
 
 Documentation
 -------------
-[Link to Documentation](https://iith-zeno.readthedocs-hosted.com/en/latest/)
+[https://iith-zeno.readthedocs-hosted.com/en/latest/](https://iith-zeno.readthedocs-hosted.com/en/latest/)
