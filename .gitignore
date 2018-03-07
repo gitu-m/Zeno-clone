@@ -43,3 +43,11 @@ docs/_build
 docs/doxyoutput
 # wherever you told Exhale containmentFolder is
 docs/api
+
+*.gcda
+*.gcno
+*.gcna
+*.gcov
+*.gcda
+
+./Makefile

@@ -382,7 +382,7 @@ void Game::Close(){
     gitu->setPos(scene->width()/2 - gitu->boundingRect().width()/2,250);
     scene->addItem(gitu);
 
-    QGraphicsTextItem * bhanu = new QGraphicsTextItem(QString("BhanuTabeti : Bhanu Prakash"));
+    QGraphicsTextItem * bhanu = new QGraphicsTextItem(QString("BhanuTabeti : Bhanu Prakash Goud Tabeti"));
     bhanu->setDefaultTextColor(Qt::white);
     bhanu->setFont(QFont("Times", 20));
     bhanu->setPos(scene->width()/2 - bhanu->boundingRect().width()/2,290);

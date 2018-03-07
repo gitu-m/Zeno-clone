@@ -1,0 +1,2 @@
+qmake Zeno.pro
+make
