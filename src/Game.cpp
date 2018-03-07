@@ -324,9 +324,13 @@ void Game::restart(){
 
     switch(Level){
         qDebug() << "start";
-        case 1: foobar->setPixmap(QPixmap("./resources/Backgrounds/level1.png")); break;
-        case 2: foobar->setPixmap(QPixmap("./resources/Backgrounds/level2.png")); break;
-        case 3: foobar->setPixmap(QPixmap("./resources/Backgrounds/level3.png")); break;
+        case 1:
+        case 4:
+            foobar->setPixmap(QPixmap("./resources/Backgrounds/level1.png")); break;
+        case 2:
+        case 3:
+            foobar->setPixmap(QPixmap("./resources/Backgrounds/level2.png")); break;
+//        case 3: foobar->setPixmap(QPixmap("./resources/Backgrounds/level3.png")); break;
     }
 
     scene->addItem(foobar);
@@ -361,17 +365,36 @@ void Game::Close(){
 
     //Setting the background for the exit screen
     QGraphicsPixmapItem *foo = new QGraphicsPixmapItem();
-    foo->setPixmap(QPixmap("./resources/Backgrounds/exit.png"));
+    foo->setPixmap(QPixmap("./resources/Backgrounds/blackGame.png"));
     scene->addItem(foo);
 
     //Setting the final string for the game
-    showText(QString("Thanks for playing!!"),40,100);
+    QGraphicsTextItem * thanks = new QGraphicsTextItem(QString("Thanks for playing!"));
+    thanks->setDefaultTextColor(Qt::white);
+    thanks->setFont(QFont("Times", 40));
+    thanks->setPos(scene->width()/2 - thanks->boundingRect().width()/2,100);
+    scene->addItem(thanks);
 
     //Our names :)
-    showText(QString("Creators : "),25,200);
-    showText(QString("gitu-m : Gitanjali"),20,250);
-    showText(QString("BhanuTabeti : Bhanu"),20,290);
-    showText(QString("sKAR04 : Sreekar"),20,330);
+    QGraphicsTextItem * gitu = new QGraphicsTextItem(QString("gitu-m : Gitanjali Mannepalli"));
+    gitu->setDefaultTextColor(Qt::white);
+    gitu->setFont(QFont("Times", 20));
+    gitu->setPos(scene->width()/2 - gitu->boundingRect().width()/2,250);
+    scene->addItem(gitu);
+
+    QGraphicsTextItem * bhanu = new QGraphicsTextItem(QString("BhanuTabeti : Bhanu Prakash"));
+    bhanu->setDefaultTextColor(Qt::white);
+    bhanu->setFont(QFont("Times", 20));
+    bhanu->setPos(scene->width()/2 - bhanu->boundingRect().width()/2,290);
+    scene->addItem(bhanu);
+
+    QGraphicsTextItem * sreekar = new QGraphicsTextItem(QString("sKAR04 : Sankalp Sreekar"));
+    sreekar->setDefaultTextColor(Qt::white);
+    sreekar->setFont(QFont("Times", 20));
+    sreekar->setPos(scene->width()/2 - sreekar->boundingRect().width()/2,330);
+    scene->addItem(sreekar);
+
+
 }
 
 void Game::displayMenuSlot(){

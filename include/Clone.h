@@ -2,7 +2,7 @@
 
 #define CLONE_H
 
-#include <QGraphicsRectItem>
+#include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <chrono>
 #include <vector>
@@ -10,7 +10,7 @@
 
 #include "Event.h"
 
-class Clone: public QObject, public QGraphicsRectItem{
+class Clone: public QObject, public QGraphicsPixmapItem{
     Q_OBJECT
 
 public:

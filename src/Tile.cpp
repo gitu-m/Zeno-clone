@@ -4,6 +4,7 @@
 #include <QThread>
 #include <typeinfo>
 #include <QList>
+#include <QtConcurrent>
 
 #include "Player.h"
 #include "Tile.h"
@@ -18,20 +19,57 @@ Tile::Tile(int type,int posX,int posY){
 	this->posY = posY;
 
 	//Rendering the appropriate image based on the tile's type
-    renderTile();
+
+    QFuture <void> f1 = QtConcurrent::run(this,&Tile::renderTile);
+
+//    renderTile();
 }
 
 void Tile::renderTile(){
     switch(type){
-        case 1 : setPixmap(QPixmap("./resources/Tiles/normal.png")); break;
-        case 2 : setPixmap(QPixmap("./resources/Tiles/start.png")); break;
-        case 3 : setPixmap(QPixmap("./resources/Tiles/end.png")); break;
-        case 4 : setPixmap(QPixmap("./resources/Tiles/trigger.png")); break;
-        case 5 : setPixmap(QPixmap("./resources/Tiles/moving.png")); break;
-        case 6 : setPixmap(QPixmap("./resources/Tiles/normal.png")); break;
-        case 7 : setPixmap(QPixmap("./resources/Tiles/trigger.png")); break;
-        case 8 : setPixmap(QPixmap("./resources/Tiles/moving.png")); break;
-        case 9 : setPixmap(QPixmap("./resources/Tiles/normal.png")); break;
+        case 1 :
+            setPixmap(QPixmap("./resources/Tiles/normal.png"));
+            break;
+        case 2 :
+            setPixmap(QPixmap("./resources/Tiles/start.png"));
+            break;
+        case 3 :
+            setPixmap(QPixmap("./resources/Tiles/end.png"));
+            break;
+        case 4 :
+            setPixmap(QPixmap("./resources/Tiles/normal.png"));
+            break;
+        case 5 :
+            setPixmap(QPixmap("./resources/Tiles/moving.png"));
+            break;
+        case 6 :
+            setPixmap(QPixmap("./resources/Tiles/normal.png"));
+            break;
+        case 7 :
+            setPixmap(QPixmap("./resources/Tiles/normal.png"));
+            break;
+        case 8 :
+            setPixmap(QPixmap("./resources/Tiles/moving.png"));
+            break;
+        case 9 :
+            setPixmap(QPixmap("./resources/Tiles/normal.png"));
+            break;
+    }
+
+    if (type == 4){
+
+        QGraphicsPixmapItem * Trigger = new QGraphicsPixmapItem();
+        Trigger->setOffset(15,15);
+        Trigger->setPixmap(QPixmap("./resources/Tiles/trigger.png"));
+        Trigger->setParentItem(this);
+    }
+
+    else if (type == 7){
+
+        QGraphicsPixmapItem * fadeTrigger = new QGraphicsPixmapItem();
+        fadeTrigger->setOffset(5,5);
+        fadeTrigger->setPixmap(QPixmap("./resources/Tiles/fadeTrigger.png"));
+        fadeTrigger->setParentItem(this);
     }
 }
 

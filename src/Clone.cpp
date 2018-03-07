@@ -16,7 +16,9 @@
 extern Game *game;
 
 Clone::Clone(const std::vector<Event> player_events, QGraphicsScene *scene,int X,int Y){
-    setRect(game->brd->initposX+12,game->brd->initposY+12,16,16);
+
+    this->setPixmap(QPixmap("./resources/clone.png"));
+    this->setOffset(game->brd->initposX+12,game->brd->initposY+12);
     scene->addItem(this);
 
     posX = X;
@@ -26,6 +28,7 @@ Clone::Clone(const std::vector<Event> player_events, QGraphicsScene *scene,int X
 
     this->player_events = player_events;
     this->scene = scene;
+
 };
 
 void Clone::start_moving(){

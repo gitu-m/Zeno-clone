@@ -17,10 +17,13 @@ extern Game * game;
 
 Player::Player(int initposX,int initposY,int playerStartPosX,int playerStartPosY,QGraphicsScene *scene){
     //Setting the dimensions and the position
-    this->setRect(initposX + 12, initposY + 12,16,16);
+
+    this->setPixmap(QPixmap("./resources/player.png"));
+    this->setOffset(initposX + 12, initposY + 12);
     this->posX = playerStartPosX;
     this->posY = playerStartPosY;
-    this->setPos(this->posX*40,this->posY*40);
+    this->setPos(this->posX*40, this->posY*40);
+
 
     //Setting the player object to receive keyboard input
     this->setFlag(QGraphicsItem::ItemIsFocusable);

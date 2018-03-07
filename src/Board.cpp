@@ -39,6 +39,7 @@ Board::Board(QGraphicsScene * scene,int curLevel){
     //Creating a struct of type Level1
 //    gen();
 
+    //Generate levels concurrently
     QFuture<void> f1 = QtConcurrent::run(gen);
 
     qDebug() << curLevel;
@@ -206,7 +207,7 @@ void Board::changeClonePos(int X, int Y){
 
             //If tile had a tesseract
             if(tileType == 6){
-                past_self->setRect(0,0,0,0); // Make clone invisible
+                past_self->boundingRect().setRect(0,0,0,0);// Make clone invisible
             }
 
             //If the tile is a trigger
